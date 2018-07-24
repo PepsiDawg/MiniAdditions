@@ -1,0 +1,5 @@
+cobblegen:
+  blocks:
+    cobblestone: 1
+    stone: 1
+dye-chance: 50
