@@ -1,13 +1,16 @@
 package io.github.pepsidog.miniadditions;
 
 import io.github.pepsidog.custommeta.CustomMeta;
-import io.github.pepsidog.custommeta.nbt.MetaHandler;
+import io.github.pepsidog.custommeta.MetaHandler;
+import io.github.pepsidog.miniadditions.ChatItem.ChatItemListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorManager;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.IgneousGenerator.IgneousGeneratorListener;
 import io.github.pepsidog.miniadditions.ImprovedShears.ShearListener;
 import io.github.pepsidog.miniadditions.Utils.StringHelper;
+import io.github.pepsidog.miniadditions.WoodPile.WoodPileListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,15 +38,16 @@ public class MiniAdditions extends JavaPlugin {
         self = this;
         rand = new Random();
         namespace = new NamespacedKey(this, "miniAdditions");
-        try {
-            metaHandler = CustomMeta.getHandler(this);
-        } catch (Exception e) { getLogger().info("Could not find support for custom meta"); }
+        metaHandler = CustomMeta.getHandler(this);
 
         saveDefaultConfig();
 
         initCobbleGen();
+        initIgneousGenerator();
         initCraftingKeeper();
-        if(metaHandler != null) { initImprovedShears(); }
+        initWoodPile();
+        initImprovedShears();
+        initChatItem();
 
         loadCrafting();
     }
@@ -73,9 +77,22 @@ public class MiniAdditions extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CobbleGeneratorListener(), this);
     }
 
+    private void initIgneousGenerator() {
+        getServer().getPluginManager().registerEvents(new IgneousGeneratorListener(), this);
+    }
+
+    private void initChatItem() {
+        getServer().getPluginManager().registerEvents(new ChatItemListener(), this);
+    }
+
     private void initCraftingKeeper() {
         ConfigurationSerialization.registerClass(CraftingKeeperManager.class, "CraftingKeeperManager");
         getServer().getPluginManager().registerEvents(new CraftingKeeperListener(), this);
+    }
+
+    private void initWoodPile() {
+        int convertTime = getConfig().getInt("log-convert-time", 5);
+        getServer().getPluginManager().registerEvents(new WoodPileListener(convertTime), this);
     }
 
     private void initImprovedShears() {

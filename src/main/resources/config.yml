@@ -3,3 +3,4 @@ cobblegen:
     cobblestone: 1
     stone: 1
 dye-chance: 50
+log-convert-time: 5

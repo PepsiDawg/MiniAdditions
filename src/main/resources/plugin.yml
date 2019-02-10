@@ -1,4 +1,5 @@
 main: io.github.pepsidog.miniadditions.MiniAdditions
 name: MiniAdditions
 version: 1.0.0
+api-version: 1.13
 description: Adds small additions to minecraft
