@@ -1,12 +1,12 @@
 package io.github.pepsidog.miniadditions;
 
-import io.github.pepsidog.custommeta.CustomMeta;
-import io.github.pepsidog.custommeta.MetaHandler;
 import io.github.pepsidog.miniadditions.ChatItem.ChatItemListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorManager;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.CustomMeta.CustomMeta;
+import io.github.pepsidog.miniadditions.CustomMeta.MetaHandler;
 import io.github.pepsidog.miniadditions.IgneousGenerator.IgneousGeneratorListener;
 import io.github.pepsidog.miniadditions.ImprovedShears.ShearListener;
 import io.github.pepsidog.miniadditions.Utils.StringHelper;
