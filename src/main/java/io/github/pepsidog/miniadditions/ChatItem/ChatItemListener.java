@@ -1,15 +1,13 @@
 package io.github.pepsidog.miniadditions.ChatItem;
 
-import io.github.pepsidog.miniadditions.MiniAdditions;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_13_R1.NBTTagCompound;
+import net.minecraft.server.v1_13_R2.NBTTagCompound;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_13_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,7 +37,7 @@ public class ChatItemListener implements Listener {
     }
 
     private String getJSONString(ItemStack itemStack) {
-        net.minecraft.server.v1_13_R1.ItemStack item = CraftItemStack.asNMSCopy(itemStack);
+        net.minecraft.server.v1_13_R2.ItemStack item = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound nbt = new NBTTagCompound();
 
         nbt = item.save(nbt);
