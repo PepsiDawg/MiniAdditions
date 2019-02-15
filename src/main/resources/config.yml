@@ -4,3 +4,5 @@ cobblegen:
     stone: 1
 dye-chance: 50
 log-convert-time: 5
+concrete-water-use-chance: 5
+name-ping-cooldown: 5

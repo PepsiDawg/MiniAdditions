@@ -3,12 +3,14 @@ package io.github.pepsidog.miniadditions;
 import io.github.pepsidog.miniadditions.ChatItem.ChatItemListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.CobbleGenerator.CobbleGeneratorManager;
+import io.github.pepsidog.miniadditions.ConcreteMixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.CraftingKeeper.CraftingKeeperManager;
 import io.github.pepsidog.miniadditions.CustomMeta.CustomMeta;
 import io.github.pepsidog.miniadditions.CustomMeta.MetaHandler;
 import io.github.pepsidog.miniadditions.IgneousGenerator.IgneousGeneratorListener;
 import io.github.pepsidog.miniadditions.ImprovedShears.ShearListener;
+import io.github.pepsidog.miniadditions.NamePing.NamePing;
 import io.github.pepsidog.miniadditions.Utils.StringHelper;
 import io.github.pepsidog.miniadditions.WoodPile.WoodPileListener;
 import org.bukkit.ChatColor;
@@ -44,10 +46,12 @@ public class MiniAdditions extends JavaPlugin {
 
         initCobbleGen();
         initIgneousGenerator();
+        initConcreteMixer();
         initCraftingKeeper();
         initWoodPile();
         initImprovedShears();
         initChatItem();
+        initNamePing();
 
         loadCrafting();
     }
@@ -79,6 +83,16 @@ public class MiniAdditions extends JavaPlugin {
 
     private void initIgneousGenerator() {
         getServer().getPluginManager().registerEvents(new IgneousGeneratorListener(), this);
+    }
+
+    private void initConcreteMixer() {
+        int useChance = getConfig().getInt("concrete-water-use-chance", 5);
+        getServer().getPluginManager().registerEvents(new ConcreteMixerListener(useChance), this);
+    }
+
+    private void initNamePing() {
+        int pingChance = getConfig().getInt("name-ping-cooldown", 5);
+        getServer().getPluginManager().registerEvents(new NamePing(pingChance), this);
     }
 
     private void initChatItem() {

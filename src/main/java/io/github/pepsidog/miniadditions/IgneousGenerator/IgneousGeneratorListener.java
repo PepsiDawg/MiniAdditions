@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +23,13 @@ public class IgneousGeneratorListener implements Listener {
             if(BlockUtils.isNextTo(to, Material.MAGMA_BLOCK)) {
                 Material rock = this.igneousMaterials.get(MiniAdditions.getRandom().nextInt(3));
                 event.setCancelled(true);
-                to.setType(rock);
-                to.getWorld().playSound(to.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 0.25f, 0.25f);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        to.setType(rock);
+                        to.getWorld().playSound(to.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 0.25f, 0.25f);
+                    }
+                }.runTaskLater(MiniAdditions.getInstance(), MiniAdditions.getRandom().nextInt(40));
             }
         }
     }
