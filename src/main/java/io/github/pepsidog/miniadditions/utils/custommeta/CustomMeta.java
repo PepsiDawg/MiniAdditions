@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.CustomMeta;
+package io.github.pepsidog.miniadditions.utils.custommeta;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

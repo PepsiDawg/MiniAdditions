@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.ChatItem;
+package io.github.pepsidog.miniadditions.additions.chatitem;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;

@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.WoodPile;
+package io.github.pepsidog.miniadditions.additions.woodpile;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;

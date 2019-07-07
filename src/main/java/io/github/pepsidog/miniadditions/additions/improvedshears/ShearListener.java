@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.ImprovedShears;
+package io.github.pepsidog.miniadditions.additions.improvedshears;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import org.bukkit.Material;

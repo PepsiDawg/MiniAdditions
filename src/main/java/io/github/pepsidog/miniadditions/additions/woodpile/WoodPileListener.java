@@ -1,11 +1,9 @@
-package io.github.pepsidog.miniadditions.WoodPile;
+package io.github.pepsidog.miniadditions.additions.woodpile;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;

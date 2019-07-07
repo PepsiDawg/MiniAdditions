@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.CobbleGenerator;
+package io.github.pepsidog.miniadditions.additions.cobblegenerator;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;

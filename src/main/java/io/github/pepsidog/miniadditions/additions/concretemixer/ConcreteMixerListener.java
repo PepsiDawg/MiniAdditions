@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.ConcreteMixer;
+package io.github.pepsidog.miniadditions.additions.concretemixer;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import org.bukkit.Material;
@@ -40,7 +40,7 @@ public class ConcreteMixerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.getHand().equals(EquipmentSlot.HAND)) {
+        if(event.getHand() != null && event.getHand().equals(EquipmentSlot.HAND)) {
             ItemStack item = event.getItem();
             Block block = event.getClickedBlock();
 

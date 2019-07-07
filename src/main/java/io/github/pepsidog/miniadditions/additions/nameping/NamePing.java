@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.NamePing;
+package io.github.pepsidog.miniadditions.additions.nameping;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;

@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.CustomMeta;
+package io.github.pepsidog.miniadditions.utils.custommeta;
 
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
 

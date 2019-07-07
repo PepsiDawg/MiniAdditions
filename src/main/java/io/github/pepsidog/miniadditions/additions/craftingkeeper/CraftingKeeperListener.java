@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.CraftingKeeper;
+package io.github.pepsidog.miniadditions.additions.craftingkeeper;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

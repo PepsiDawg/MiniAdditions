@@ -1,4 +1,4 @@
-package io.github.pepsidog.miniadditions.Utils;
+package io.github.pepsidog.miniadditions.utils;
 
 import org.bukkit.ChatColor;
 
