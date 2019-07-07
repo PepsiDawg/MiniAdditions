@@ -20,7 +20,7 @@ public class BiomeBombListener {
         //Plains
         ingredients = new HashMap<Material, Integer>() {{
             put(Material.EGG, 1);
-            put(Material.TALL_GRASS, 8);
+            put(Material.GRASS, 8);
         }};
         result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.GREEN + "Plains")).build();
         CraftingUtil.addShapelessCrafting("Biomb_Bomb_Plains", ingredients, result);
