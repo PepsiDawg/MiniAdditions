@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShearListener implements Listener {
     private int chance;
-    private Material[] colors = new Material[] { Material.INK_SAC, Material.ROSE_RED, Material.CACTUS_GREEN, Material.COCOA_BEANS, Material.LAPIS_LAZULI, Material.PURPLE_DYE, Material.CYAN_DYE, Material.LIGHT_GRAY_DYE, Material.GRAY_DYE, Material.PINK_DYE, Material.LIME_DYE, Material.DANDELION_YELLOW, Material.LIGHT_BLUE_DYE, Material.MAGENTA_DYE, Material.ORANGE_DYE, Material.BONE_MEAL };
+    private Material[] colors = new Material[] { Material.BLACK_DYE, Material.RED_DYE, Material.GREEN_DYE, Material.BROWN_DYE, Material.BLUE_DYE, Material.PURPLE_DYE, Material.CYAN_DYE, Material.LIGHT_GRAY_DYE, Material.GRAY_DYE, Material.PINK_DYE, Material.LIME_DYE, Material.YELLOW_DYE, Material.LIGHT_BLUE_DYE, Material.MAGENTA_DYE, Material.ORANGE_DYE, Material.WHITE_DYE };
 
     public ShearListener(int chance) {
         this.chance = chance;
