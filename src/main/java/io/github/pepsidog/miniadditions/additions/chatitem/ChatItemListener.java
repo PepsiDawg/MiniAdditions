@@ -1,13 +1,12 @@
 package io.github.pepsidog.miniadditions.additions.chatitem;
 
+import io.github.pepsidog.miniadditions.utils.custommeta.NBTUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_13_R2.NBTTagCompound;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,7 +22,7 @@ public class ChatItemListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if(event.getMessage().contains("[item]") && !event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-            String itemJSON = getJSONString(item);
+            String itemJSON = NBTUtils.getJSONString(item);
             String name = getName(item);
             String format = event.getFormat().substring(0, event.getFormat().length() - 4);
             String color = format.substring(format.length() - 2);
@@ -34,14 +33,6 @@ public class ChatItemListener implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
-
-    private String getJSONString(ItemStack itemStack) {
-        net.minecraft.server.v1_13_R2.ItemStack item = CraftItemStack.asNMSCopy(itemStack);
-        NBTTagCompound nbt = new NBTTagCompound();
-
-        nbt = item.save(nbt);
-        return nbt.toString();
     }
 
     private TextComponent getComponentMessage(String msg, String format, String color, String jsonItem, String itemName) {
