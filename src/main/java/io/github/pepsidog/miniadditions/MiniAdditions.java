@@ -9,6 +9,7 @@ import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGenerato
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.utils.custommeta.CustomMeta;
 import io.github.pepsidog.miniadditions.utils.custommeta.MetaHandler;
 import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
@@ -45,10 +46,10 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",     "BiomeBombs",       "ChatItem",
-                "CobbleGenerator", "ConcreteMixer",    "CraftingKeeper",
-                "EasyPaintings",   "IgneousGenerator", "ImprovedShears",
-                "NamePing",        "WoodPile"
+                "ArmorStands",     "BiomeBombs",    "ChatItem",
+                "CobbleGenerator", "ConcreteMixer", "CraftingKeeper",
+                "EasyPaintings",   "Experimental",  "IgneousGenerator",
+                "ImprovedShears",  "NamePing",      "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -128,6 +129,10 @@ public class MiniAdditions extends JavaPlugin {
     public void initEasyPaintings() {
         this.getServer().getPluginManager().registerEvents(new EasyPaintings(), this);
         this.getLogger().info("Easy Paintings enabled");
+    }
+
+    public void initExperimental() {
+        this.getCommand("synth").setExecutor(new SoundSynthExperiment());
     }
 
     public void initIgneousGenerator() {
