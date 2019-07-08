@@ -8,6 +8,7 @@ import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGenerato
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.utils.custommeta.CustomMeta;
 import io.github.pepsidog.miniadditions.utils.custommeta.MetaHandler;
 import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
@@ -52,6 +53,7 @@ public class MiniAdditions extends JavaPlugin {
         initChatItem();
         initNamePing();
         initArmorStandAdditions();
+        initExperimental();
         //initEasyPaintings();
 
         BiomeBombListener.initRecipes();
@@ -73,6 +75,10 @@ public class MiniAdditions extends JavaPlugin {
     }
 
     public static MetaHandler getMetaHandler() { return metaHandler; }
+
+    private void initExperimental() {
+        getCommand("synth").setExecutor(new SoundSynthExperiment());
+    }
 
     private void initCobbleGen() {
         ConfigurationSection section = null;
