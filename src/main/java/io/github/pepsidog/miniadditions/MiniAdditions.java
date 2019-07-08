@@ -1,5 +1,6 @@
 package io.github.pepsidog.miniadditions;
 
+import com.google.common.collect.Lists;
 import io.github.pepsidog.miniadditions.additions.armorstands.ArmorStandAdditions;
 import io.github.pepsidog.miniadditions.additions.biomebombs.BiomeBombListener;
 import io.github.pepsidog.miniadditions.additions.chatitem.ChatItemListener;
@@ -20,7 +21,6 @@ import io.github.pepsidog.miniadditions.utils.StringHelper;
 import io.github.pepsidog.miniadditions.additions.woodpile.WoodPileListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class MiniAdditions extends JavaPlugin {
@@ -43,18 +44,26 @@ public class MiniAdditions extends JavaPlugin {
 
         saveDefaultConfig();
 
-        initCobbleGen();
-        initIgneousGenerator();
-        initConcreteMixer();
-        initCraftingKeeper();
-        initWoodPile();
-        initImprovedShears();
-        initChatItem();
-        initNamePing();
-        initArmorStandAdditions();
-        //initEasyPaintings();
-
-        BiomeBombListener.initRecipes();
+        ArrayList<String> names = Lists.newArrayList(
+                "ArmorStands",     "BiomeBombs",       "ChatItem",
+                "CobbleGenerator", "ConcreteMixer",    "CraftingKeeper",
+                "EasyPaintings",   "IgneousGenerator", "ImprovedShears",
+                "NamePing",        "WoodPile"
+        );
+        ConfigManager.Initialize(this, names);
+        for (String name : names) {
+            YamlConfiguration config = ConfigManager.getConfig(name);
+            if (config == null || config.getBoolean("enabled")) {
+                try {
+                    this.getClass().getMethod("init" + name).invoke(this);
+                } catch (NoSuchMethodException | InvocationTargetException ex) {
+                    this.getLogger().severe("Could not find method for initialization: " + name);
+                    ex.printStackTrace();
+                } catch (IllegalAccessException ex) {
+                    this.getLogger().severe("Could not access method for initialization: " + name);
+                }
+            }
+        }
 
         loadCrafting();
     }
@@ -74,67 +83,101 @@ public class MiniAdditions extends JavaPlugin {
 
     public static MetaHandler getMetaHandler() { return metaHandler; }
 
-    private void initCobbleGen() {
-        ConfigurationSection section = null;
-        if(getConfig().isConfigurationSection("cobblegen.blocks")) {
-            section = getConfig().getConfigurationSection("cobblegen.blocks");
+    public void initArmorStands() {
+        this.getServer().getPluginManager().registerEvents(new ArmorStandAdditions(), this);
+        this.getLogger().info("Armor Stands enabled");
+    }
+
+    public void initBiomeBombs() {
+        BiomeBombListener.initRecipes();
+        this.getLogger().info("Biome Bombs enabled");
+    }
+
+    public void initChatItem() {
+        this.getServer().getPluginManager().registerEvents(new ChatItemListener(), this);
+        this.getLogger().info("Chat Item enabled");
+    }
+
+    public void initCobbleGenerator() {
+        YamlConfiguration config = ConfigManager.getConfig("cobblegenerator");
+        if (config != null) {
+            if (config.isConfigurationSection("blocks")) {
+                CobbleGeneratorManager.loadConfig(config.getConfigurationSection("blocks"));
+
+                this.getServer().getPluginManager().registerEvents(new CobbleGeneratorListener(), this);
+                this.getLogger().info("Cobble Generator enabled");
+            }
+        }
+    }
+
+    public void initConcreteMixer() {
+        YamlConfiguration config = ConfigManager.getConfig("concretemixer");
+        if (config != null) {
+            int useChance = config.getInt("water-use-chance", 5);
+            this.getServer().getPluginManager().registerEvents(new ConcreteMixerListener(useChance), this);
+            this.getLogger().info("Concrete Mixer enabled");
+        }
+    }
+
+    public void initCraftingKeeper() {
+        ConfigurationSerialization.registerClass(CraftingKeeperManager.class, "CraftingKeeperManager");
+        this.getServer().getPluginManager().registerEvents(new CraftingKeeperListener(), this);
+        this.getLogger().info("Crafting Keeper enabled");
+    }
+
+    public void initEasyPaintings() {
+        this.getServer().getPluginManager().registerEvents(new EasyPaintings(), this);
+        this.getLogger().info("Easy Paintings enabled");
+    }
+
+    public void initIgneousGenerator() {
+        this.getServer().getPluginManager().registerEvents(new IgneousGeneratorListener(), this);
+        this.getLogger().info("Igneous Generator enabled");
+    }
+
+    public void initImprovedShears() {
+        YamlConfiguration config = ConfigManager.getConfig("improvedshears");
+        int chance = 25;
+        if (config != null) {
+            chance = config.getInt("dye-chance");
         }
 
-        CobbleGeneratorManager.loadConfig(section);
-        getServer().getPluginManager().registerEvents(new CobbleGeneratorListener(), this);
-    }
-
-    private void initIgneousGenerator() {
-        getServer().getPluginManager().registerEvents(new IgneousGeneratorListener(), this);
-    }
-
-    private void initConcreteMixer() {
-        int useChance = getConfig().getInt("concrete-water-use-chance", 5);
-        getServer().getPluginManager().registerEvents(new ConcreteMixerListener(useChance), this);
-    }
-
-    private void initArmorStandAdditions() {
-        getServer().getPluginManager().registerEvents(new ArmorStandAdditions(), this);
-    }
-
-    private void initNamePing() {
-        int pingChance = getConfig().getInt("name-ping-cooldown", 5);
-        getServer().getPluginManager().registerEvents(new NamePing(pingChance), this);
-    }
-
-    private void initEasyPaintings() {
-        getServer().getPluginManager().registerEvents(new EasyPaintings(), this);
-    }
-
-    private void initChatItem() {
-        getServer().getPluginManager().registerEvents(new ChatItemListener(), this);
-    }
-
-    private void initCraftingKeeper() {
-        ConfigurationSerialization.registerClass(CraftingKeeperManager.class, "CraftingKeeperManager");
-        getServer().getPluginManager().registerEvents(new CraftingKeeperListener(), this);
-    }
-
-    private void initWoodPile() {
-        int convertTime = getConfig().getInt("log-convert-time", 5);
-        getServer().getPluginManager().registerEvents(new WoodPileListener(convertTime), this);
-    }
-
-    private void initImprovedShears() {
-        int chance = getConfig().getInt("dye-chance", 25);
         Map<Material, Integer> ingredients = new HashMap<Material, Integer>() {{
             put(Material.SHEARS, 2);
             put(Material.DIAMOND, 1);
         }};
         ItemStack result = new ItemBuilder(Material.SHEARS)
-                                .setName(StringHelper.rainbowfy("Improved Shears"))
-                                .addLore(ChatColor.GOLD + "Has a " + chance + "% chance to drop dye instead of wool!")
-                                .build();
+                .setName(StringHelper.rainbowfy("Improved Shears"))
+                .addLore(ChatColor.GOLD + "Has a " + chance + "% chance to drop dye instead of wool!")
+                .build();
 
         result = metaHandler.setKey(result, "improved-shears", "true");
         CraftingUtil.addShapelessCrafting("Improved_Shears", ingredients, result);
 
-        getServer().getPluginManager().registerEvents(new ShearListener(chance), this);
+        this.getServer().getPluginManager().registerEvents(new ShearListener(chance), this);
+        this.getLogger().info("Improved Shears enabled");
+    }
+
+    public void initNamePing() {
+        YamlConfiguration config = ConfigManager.getConfig("nameping");
+        int chance = 5;
+        if (config != null) {
+            chance = config.getInt("ping-cooldown");
+        }
+
+        this.getServer().getPluginManager().registerEvents(new NamePing(chance), this);
+        this.getLogger().info("Name Ping enabled");
+    }
+
+    public void initWoodPile() {
+        YamlConfiguration config = ConfigManager.getConfig("woodpile");
+        int convertTime = 5;
+        if (config != null) {
+            config.getInt("log-convert-time");
+        }
+
+        this.getServer().getPluginManager().registerEvents(new WoodPileListener(convertTime), this);
+        this.getLogger().info("Wood Pile enabled");
     }
 
     private void saveCrafting() {
