@@ -9,6 +9,7 @@ import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGenerato
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.additions.creeperworks.CreeperworksListener;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
@@ -48,11 +49,11 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",      "BiomeBombs",     "ChatItem",
-                "CobbleGenerator",  "ConcreteMixer",  "CraftingKeeper",
-                "EasyPaintings",    "Experimental",   "ExperimentalCommands",
-                "IgneousGenerator", "ImprovedShears", "NamePing",
-                "SlimyBoots",       "WoodPile"
+                "ArmorStands",          "BiomeBombs",       "ChatItem",
+                "CobbleGenerator",      "ConcreteMixer",    "CraftingKeeper",
+                "Creeperworks",         "EasyPaintings",    "Experimental",
+                "ExperimentalCommands", "IgneousGenerator", "ImprovedShears",
+                "NamePing",             "SlimyBoots",       "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -127,6 +128,11 @@ public class MiniAdditions extends JavaPlugin {
         ConfigurationSerialization.registerClass(CraftingKeeperManager.class, "CraftingKeeperManager");
         this.getServer().getPluginManager().registerEvents(new CraftingKeeperListener(), this);
         this.getLogger().info("Crafting Keeper enabled");
+    }
+
+    public void initCreeperworks() {
+        this.getServer().getPluginManager().registerEvents(new CreeperworksListener(), this);
+        this.getLogger().info("Creeperworks enabled");
     }
 
     public void initEasyPaintings() {
