@@ -6,6 +6,7 @@ import io.github.pepsidog.miniadditions.additions.biomebombs.BiomeBombListener;
 import io.github.pepsidog.miniadditions.additions.chatitem.ChatItemListener;
 import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGeneratorManager;
+import io.github.pepsidog.miniadditions.additions.compressedmobs.CompressedMobsListener;
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
@@ -49,11 +50,12 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",          "BiomeBombs",       "ChatItem",
-                "CobbleGenerator",      "ConcreteMixer",    "CraftingKeeper",
-                "Creeperworks",         "EasyPaintings",    "Experimental",
-                "ExperimentalCommands", "IgneousGenerator", "ImprovedShears",
-                "NamePing",             "SlimyBoots",       "WoodPile"
+                "ArmorStands",     "BiomeBombs",           "ChatItem",
+                "CobbleGenerator", "CompressedMobs",       "ConcreteMixer",
+                "CraftingKeeper",  "Creeperworks",         "EasyPaintings",
+                "Experimental",    "ExperimentalCommands", "IgneousGenerator",
+                "ImprovedShears",  "NamePing",             "SlimyBoots",
+                "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -113,6 +115,11 @@ public class MiniAdditions extends JavaPlugin {
                 this.getLogger().info("Cobble Generator enabled");
             }
         }
+    }
+
+    public void initCompressedMobs() {
+        this.getServer().getPluginManager().registerEvents(new CompressedMobsListener(this), this);
+        this.getLogger().info("Compressed Mobs enabled");
     }
 
     public void initConcreteMixer() {
