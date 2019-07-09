@@ -9,7 +9,9 @@ import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGenerato
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
+import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.utils.custommeta.CustomMeta;
 import io.github.pepsidog.miniadditions.utils.custommeta.MetaHandler;
 import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
@@ -46,10 +48,11 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",     "BiomeBombs",    "ChatItem",
-                "CobbleGenerator", "ConcreteMixer", "CraftingKeeper",
-                "EasyPaintings",   "Experimental",  "IgneousGenerator",
-                "ImprovedShears",  "NamePing",      "WoodPile"
+                "ArmorStands",      "BiomeBombs",     "ChatItem",
+                "CobbleGenerator",  "ConcreteMixer",  "CraftingKeeper",
+                "EasyPaintings",    "Experimental",   "ExperimentalCommands",
+                "IgneousGenerator", "ImprovedShears", "NamePing",
+                "SlimyBoots",       "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -133,6 +136,13 @@ public class MiniAdditions extends JavaPlugin {
 
     public void initExperimental() {
         this.getCommand("synth").setExecutor(new SoundSynthExperiment());
+        this.getLogger().info("Sound Synth enabled");
+
+    }
+
+    public void initExperimentalCommands() {
+        this.getCommand("shoot").setExecutor(new ExperimentalCommands());
+        this.getLogger().info("Experimental Commands enabled");
     }
 
     public void initIgneousGenerator() {
@@ -172,6 +182,12 @@ public class MiniAdditions extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new NamePing(chance), this);
         this.getLogger().info("Name Ping enabled");
+    }
+
+    public void initSlimyBoots() {
+        SlimyBootsListener.initRecipies();
+        this.getServer().getPluginManager().registerEvents(new SlimyBootsListener(), this);
+        this.getLogger().info("Slimy Boots enabled");
     }
 
     public void initWoodPile() {
