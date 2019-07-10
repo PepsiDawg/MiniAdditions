@@ -11,6 +11,7 @@ import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerLis
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
 import io.github.pepsidog.miniadditions.additions.creeperworks.CreeperworksListener;
+import io.github.pepsidog.miniadditions.additions.easysleep.EasySleepListener;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
@@ -50,12 +51,12 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",     "BiomeBombs",           "ChatItem",
-                "CobbleGenerator", "CompressedMobs",       "ConcreteMixer",
-                "CraftingKeeper",  "Creeperworks",         "EasyPaintings",
-                "Experimental",    "ExperimentalCommands", "IgneousGenerator",
-                "ImprovedShears",  "NamePing",             "SlimyBoots",
-                "WoodPile"
+                "ArmorStands",     "BiomeBombs",      "ChatItem",
+                "CobbleGenerator", "CompressedMobs",  "ConcreteMixer",
+                "CraftingKeeper",  "Creeperworks",    "EasyPaintings",
+                "EasySleep",       "Experimental",    "ExperimentalCommands",
+                "IgneousGenerator","ImprovedShears",  "NamePing",
+                "SlimyBoots",      "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -145,6 +146,17 @@ public class MiniAdditions extends JavaPlugin {
     public void initEasyPaintings() {
         this.getServer().getPluginManager().registerEvents(new EasyPaintings(), this);
         this.getLogger().info("Easy Paintings enabled");
+    }
+
+    public void initEasySleep() {
+        YamlConfiguration config = ConfigManager.getConfig("easysleep");
+        double threshold = 25;
+        if (config != null) {
+            threshold = config.getInt("threshold");
+        }
+        getServer().getPluginManager().registerEvents(new EasySleepListener(threshold), this);
+        this.getLogger().info("Easy Sleeping enabled");
+
     }
 
     public void initExperimental() {

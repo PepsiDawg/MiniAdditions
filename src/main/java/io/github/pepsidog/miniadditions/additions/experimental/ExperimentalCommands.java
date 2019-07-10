@@ -1,5 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.experimental;
 
+import io.github.pepsidog.miniadditions.utils.CustomProjectile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,7 @@ public class ExperimentalCommands implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("shoot")) {
             Player player = (Player) commandSender;
-            BottleProjectile projectile = new BottleProjectile(player);
+            CustomProjectile projectile = BottleProjectile.getBottleProjectile(player.getLocation().clone(), player.getLocation().getDirection().clone());
             projectile.launch();
         }
         return true;
