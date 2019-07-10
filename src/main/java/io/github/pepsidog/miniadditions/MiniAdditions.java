@@ -2,6 +2,7 @@ package io.github.pepsidog.miniadditions;
 
 import com.google.common.collect.Lists;
 import io.github.pepsidog.miniadditions.additions.armorstands.ArmorStandAdditions;
+import io.github.pepsidog.miniadditions.additions.autostack.AutoStackListener;
 import io.github.pepsidog.miniadditions.additions.biomebombs.BiomeBombListener;
 import io.github.pepsidog.miniadditions.additions.chatitem.ChatItemListener;
 import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGeneratorListener;
@@ -51,12 +52,12 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",     "BiomeBombs",      "ChatItem",
-                "CobbleGenerator", "CompressedMobs",  "ConcreteMixer",
-                "CraftingKeeper",  "Creeperworks",    "EasyPaintings",
-                "EasySleep",       "Experimental",    "ExperimentalCommands",
-                "IgneousGenerator","ImprovedShears",  "NamePing",
-                "SlimyBoots",      "WoodPile"
+                "ArmorStands",          "AutoStack",       "BiomeBombs",
+                "ChatItem",             "CobbleGenerator", "CompressedMobs",
+                "ConcreteMixer",        "CraftingKeeper",  "Creeperworks",
+                "EasyPaintings",        "EasySleep",       "Experimental",
+                "ExperimentalCommands", "IgneousGenerator","ImprovedShears",
+                "NamePing",             "SlimyBoots",      "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
@@ -94,6 +95,11 @@ public class MiniAdditions extends JavaPlugin {
     public void initArmorStands() {
         this.getServer().getPluginManager().registerEvents(new ArmorStandAdditions(), this);
         this.getLogger().info("Armor Stands enabled");
+    }
+
+    public void initAutoStack() {
+        this.getServer().getPluginManager().registerEvents(new AutoStackListener(), this);
+        this.getLogger().info("Auto Stack enabled");
     }
 
     public void initBiomeBombs() {
