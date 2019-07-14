@@ -104,6 +104,7 @@ public class MiniAdditions extends JavaPlugin {
 
     public void initBiomeBombs() {
         BiomeBombListener.initRecipes();
+        this.getServer().getPluginManager().registerEvents(new BiomeBombListener(), this);
         this.getLogger().info("Biome Bombs enabled");
     }
 

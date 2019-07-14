@@ -17,7 +17,7 @@ public class ExperimentalCommands implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("shoot")) {
             Player player = (Player) commandSender;
-            CustomProjectile projectile = BottleProjectile.getBottleProjectile(player.getLocation().clone(), player.getLocation().getDirection().clone());
+            CustomProjectile projectile = BottleProjectile.getBottleProjectile(player.getEyeLocation().clone(), player.getLocation().getDirection().clone());
             projectile.launch();
         }
         return true;

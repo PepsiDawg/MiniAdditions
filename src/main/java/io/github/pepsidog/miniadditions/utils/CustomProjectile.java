@@ -105,8 +105,8 @@ public class CustomProjectile extends BukkitRunnable {
             return;
         }
 
-        this.update();
         this.display.execute(this);
+        this.update();
         this.lifespan--;
     }
 
