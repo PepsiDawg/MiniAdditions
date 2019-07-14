@@ -1,5 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.easysleep;
 
+import io.github.pepsidog.miniadditions.MiniAdditions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -7,6 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +27,22 @@ public class EasySleepListener implements Listener {
 
     @EventHandler
     public void onPlayerSleep(PlayerBedEnterEvent event) {
+        if(!event.getBedEnterResult().equals(PlayerBedEnterEvent.BedEnterResult.OK)) {
+            return;
+        }
+
         if(!this.sleeping.contains(event.getPlayer().getUniqueId())) {
             this.sleeping.add(event.getPlayer().getUniqueId());
             Bukkit.broadcastMessage(ChatColor.YELLOW + event.getPlayer().getName() + " is now sleeping. " + getPlayersInBed());
         }
 
         if((double)this.sleeping.size() / (double)Bukkit.getOnlinePlayers().size() >= this.threshold) {
-            Bukkit.broadcastMessage(ChatColor.YELLOW + "Wakey wakey, eggs and bakey.");
-            this.sleeping.clear();
+
+            Bukkit.getScheduler().runTaskLater(MiniAdditions.getInstance(), ()->{
+                Bukkit.broadcastMessage(ChatColor.YELLOW + "Wakey wakey, eggs and bakey.");
+                this.sleeping.clear();
+                event.getPlayer().getWorld().setTime(0);
+            }, 100);
         }
     }
 
