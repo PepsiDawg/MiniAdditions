@@ -1,5 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.compressedmobs;
 
+import io.github.mrsperry.mcutils.EntityTypes;
 import io.github.pepsidog.miniadditions.ConfigManager;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 
@@ -57,17 +58,20 @@ public class CompressedMobsListener implements Listener {
             return;
         }
 
-        // Check if the mob can be compressed
-        if (!mob.hasMetadata("no-compress")) {
-            // Check if the mob is blacklisted
-            if (!this.blacklist.contains(mob.getType())) {
-                if (this.random.nextInt(100) <= this.chanceToSpawn) {
-                    // Set mob's metadata for its death event
-                    mob.setMetadata("compressed", new FixedMetadataValue(this.plugin, true));
+        // Check if the entity is a mob that can be compressed
+        if (EntityTypes.getAllTypes().contains(mob.getType())) {
+            // Check if the mob can be compressed
+            if (!mob.hasMetadata("no-compress")) {
+                // Check if the mob is blacklisted
+                if (!this.blacklist.contains(mob.getType())) {
+                    if (this.random.nextInt(100) <= this.chanceToSpawn) {
+                        // Set mob's metadata for its death event
+                        mob.setMetadata("compressed", new FixedMetadataValue(this.plugin, true));
 
-                    // Make the mob's name visible
-                    mob.setCustomName(ChatColor.GRAY + "Compressed " + mob.getName());
-                    mob.setCustomNameVisible(true);
+                        // Make the mob's name visible
+                        mob.setCustomName(ChatColor.GRAY + "Compressed " + mob.getName());
+                        mob.setCustomNameVisible(true);
+                    }
                 }
             }
         }
