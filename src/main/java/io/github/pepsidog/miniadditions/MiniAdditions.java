@@ -52,12 +52,24 @@ public class MiniAdditions extends JavaPlugin {
         saveDefaultConfig();
 
         ArrayList<String> names = Lists.newArrayList(
-                "ArmorStands",          "AutoStack",       "BiomeBombs",
-                "ChatItem",             "CobbleGenerator", "CompressedMobs",
-                "ConcreteMixer",        "CraftingKeeper",  "Creeperworks",
-                "EasyPaintings",        "EasySleep",       "Experimental",
-                "ExperimentalCommands", "IgneousGenerator","ImprovedShears",
-                "NamePing",             "SlimyBoots",      "WoodPile"
+                "ArmorStands",
+                "AutoStack",
+                "BiomeBombs",
+                "ChatItem",
+                "CobbleGenerator",
+                "CompressedMobs",
+                "ConcreteMixer",
+                "CraftingKeeper",
+                "Creeperworks",
+                "EasyPaintings",
+                "EasySleep",
+                "Experimental",
+                "ExperimentalCommands",
+                "IgneousGenerator",
+                "ImprovedShears",
+                "NamePing",
+                "SlimyBoots",
+                "WoodPile"
         );
         ConfigManager.Initialize(this, names);
         for (String name : names) {
