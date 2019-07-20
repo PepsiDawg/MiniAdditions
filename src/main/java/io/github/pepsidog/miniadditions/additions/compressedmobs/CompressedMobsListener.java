@@ -1,7 +1,8 @@
 package io.github.pepsidog.miniadditions.additions.compressedmobs;
 
+import io.github.mrsperry.mcutils.ConfigManager;
 import io.github.mrsperry.mcutils.EntityTypes;
-import io.github.pepsidog.miniadditions.ConfigManager;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
 
 import net.md_5.bungee.api.ChatColor;

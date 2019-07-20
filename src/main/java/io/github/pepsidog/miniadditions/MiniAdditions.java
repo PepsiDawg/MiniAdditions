@@ -1,6 +1,9 @@
 package io.github.pepsidog.miniadditions;
 
 import com.google.common.collect.Lists;
+
+import io.github.mrsperry.mcutils.ConfigManager;
+
 import io.github.pepsidog.miniadditions.additions.armorstands.ArmorStandAdditions;
 import io.github.pepsidog.miniadditions.additions.autostack.AutoStackListener;
 import io.github.pepsidog.miniadditions.additions.biomebombs.BiomeBombListener;
@@ -15,6 +18,7 @@ import io.github.pepsidog.miniadditions.additions.creeperworks.CreeperworksListe
 import io.github.pepsidog.miniadditions.additions.easysleep.EasySleepListener;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
+import io.github.pepsidog.miniadditions.additions.mobeggs.MobEggListener;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.utils.custommeta.CustomMeta;
 import io.github.pepsidog.miniadditions.utils.custommeta.MetaHandler;
@@ -26,6 +30,7 @@ import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.StringHelper;
 import io.github.pepsidog.miniadditions.additions.woodpile.WoodPileListener;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -71,7 +76,7 @@ public class MiniAdditions extends JavaPlugin {
                 "SlimyBoots",
                 "WoodPile"
         );
-        ConfigManager.Initialize(this, names);
+        ConfigManager.initialize(this, names);
         for (String name : names) {
             YamlConfiguration config = ConfigManager.getConfig(name);
             if (config == null || config.getBoolean("enabled")) {
@@ -215,6 +220,10 @@ public class MiniAdditions extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new ShearListener(chance), this);
         this.getLogger().info("Improved Shears enabled");
+    }
+
+    public void initMobEggs() {
+        this.getServer().getPluginManager().registerEvents(new MobEggListener(this), this);
     }
 
     public void initNamePing() {
