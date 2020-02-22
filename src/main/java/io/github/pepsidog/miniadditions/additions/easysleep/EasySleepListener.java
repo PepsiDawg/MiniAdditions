@@ -1,28 +1,32 @@
 package io.github.pepsidog.miniadditions.additions.easysleep;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class EasySleepListener implements Listener {
+public class EasySleepListener extends Module {
     private List<UUID> sleeping;
     private double threshold;
 
-    public EasySleepListener(double threshold) {
+    public EasySleepListener() {
+        super("EasySleep");
         this.sleeping = new ArrayList<>();
-        this.threshold = threshold;
+    }
+
+    @Override
+    public void init(YamlConfiguration config) {
+        super.init(config);
+        this.threshold = config.getDouble("threshold", 0.25);
     }
 
     @EventHandler

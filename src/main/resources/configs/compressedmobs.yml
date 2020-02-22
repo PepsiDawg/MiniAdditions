@@ -1,5 +1,0 @@
-enabled: true
-blacklist:
-  - "villager"
-chance-to-spawn: 5
-yield: 5

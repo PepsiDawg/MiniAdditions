@@ -1,10 +1,11 @@
 package io.github.pepsidog.miniadditions.additions.craftingkeeper;
 
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -18,11 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class CraftingKeeperListener implements Listener {
+public class CraftingKeeperListener extends Module {
     Map<UUID, Location> tableBlocks;
 
     public CraftingKeeperListener() {
+        super("CraftingKeeper");
         this.tableBlocks = new HashMap<>();
+        ConfigurationSerialization.registerClass(CraftingKeeperManager.class, "CraftingKeeperManager");
     }
 
     @EventHandler

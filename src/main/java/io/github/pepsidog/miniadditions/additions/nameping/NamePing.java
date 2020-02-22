@@ -1,10 +1,11 @@
 package io.github.pepsidog.miniadditions.additions.nameping;
 
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.Date;
@@ -13,15 +14,21 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NamePing implements Listener {
+public class NamePing extends Module {
     private Map<String, Date> cooldowns;
     private Pattern pattern;
     private int cooldown;
 
-    public NamePing(int cooldown) {
+    public NamePing() {
+        super("NamePing");
         cooldowns = new HashMap<>();
         pattern = Pattern.compile("@(\\w+)\\s*");
-        this.cooldown = cooldown;
+    }
+
+    @Override
+    public void init(YamlConfiguration config) {
+        super.init(config);
+        this.cooldown = config.getInt("ping-cooldown", 5);
     }
 
     @EventHandler

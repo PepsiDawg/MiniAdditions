@@ -1,11 +1,12 @@
 package io.github.pepsidog.miniadditions.additions.woodpile;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,13 +14,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WoodPileListener implements Listener {
+public class WoodPileListener extends Module {
     private int logConvertTime;
     private Map<WoodPile, BukkitRunnable> woodPiles;
 
-    public WoodPileListener(int convertTime) {
-        this.logConvertTime = convertTime;
+    public WoodPileListener() {
+        super("WoodPile");
         woodPiles = new HashMap<>();
+    }
+
+    @Override
+    public void init(YamlConfiguration config) {
+        super.init(config);
+        this.logConvertTime = config.getInt("log-convert-time", 5);
     }
 
     @EventHandler

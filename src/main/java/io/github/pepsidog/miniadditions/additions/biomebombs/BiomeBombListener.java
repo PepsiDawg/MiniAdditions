@@ -1,29 +1,34 @@
 package io.github.pepsidog.miniadditions.additions.biomebombs;
 
+import io.github.mrsperry.mcutils.ItemMetaHandler;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.CustomProjectile;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
-import io.github.pepsidog.miniadditions.utils.custommeta.MetaHandler;
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class BiomeBombListener implements Listener {
-    private MetaHandler meta;
+public class BiomeBombListener extends Module {
+    private NamespacedKey biomeBombKey;
+    private final PersistentDataType STRING = PersistentDataType.STRING;
 
     public BiomeBombListener() {
-        meta = MiniAdditions.getMetaHandler();
+        super("BiomeBombs");
+        biomeBombKey = new NamespacedKey(MiniAdditions.getInstance(), "biomb_bomb_type");
+        this.initRecipes();
     }
 
     @EventHandler
@@ -34,7 +39,7 @@ public class BiomeBombListener implements Listener {
 
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         Player player = event.getPlayer();
-        if(item != null && meta.hasKey(item, "biome_type")) {
+        if(item != null && ItemMetaHandler.hasKey(item, biomeBombKey, STRING)) {
             CustomProjectile biomeBomb = getBiomeBomb(item, player.getEyeLocation(), player.getLocation().getDirection());
             item.setAmount(item.getAmount() - 1);
             biomeBomb.launch();
@@ -68,113 +73,122 @@ public class BiomeBombListener implements Listener {
         armorStand.setHelmet(item.clone());
 
         biomeBomb.setMetaData("biomebomb_as", armorStand);
-        biomeBomb.setMetaData("type", this.meta.getValue(item, "biome_type"));
+        biomeBomb.setMetaData("type", ItemMetaHandler.get(item, biomeBombKey, STRING));
         return biomeBomb;
     }
 
-    public static void initRecipes() {
+    private void addRecipe(Map<Material, Integer> ingredients, String type, ChatColor textColor, Color... fireworkColors) {
         ItemBuilder builder = new ItemBuilder(Material.FIREWORK_STAR)
                 .setName(ChatColor.GREEN + "Biome " + ChatColor.GRAY + "Bomb");
-        Map<Material, Integer> ingredients;
-        ItemStack result;
-        MetaHandler metaHandler = MiniAdditions.getMetaHandler();
+        ItemStack item = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + textColor + type)).build();
+        ItemMetaHandler.set(item, biomeBombKey, STRING, type.toUpperCase());
 
-        //Plains
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.GRASS, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.GREEN + "Plains")).build();
-        result = metaHandler.setKey(result, "biome_type", "PLAINS");
-        result = giveColors(result, Color.fromRGB(185, 255, 130));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Plains", ingredients, result);
-
-        //Ocean
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.KELP, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.BLUE + "Ocean")).build();
-        result = metaHandler.setKey(result, "biome_type", "OCEAN");
-        result = giveColors(result, Color.fromRGB(95, 205, 225));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Ocean", ingredients, result);
-
-        //Forest
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.OAK_LEAVES, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.DARK_GREEN + "Forest")).build();
-        result = metaHandler.setKey(result, "biome_type", "FOREST");
-        result = giveColors(result, Color.fromRGB(35, 130, 75));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Forest", ingredients, result);
-
-        //Desert
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.SAND, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.YELLOW + "Desert")).build();
-        result = metaHandler.setKey(result, "biome_type", "DESERT");
-        result = giveColors(result, Color.fromRGB(225, 240, 150));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Desert", ingredients, result);
-
-        //Tiaga
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.SPRUCE_LEAVES, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.DARK_BLUE + "Tiaga")).build();
-        result = metaHandler.setKey(result, "biome_type", "TIAGA");
-        result = giveColors(result, Color.fromRGB(90, 115, 60));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Tiaga", ingredients, result);
-
-        //Jungle
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.JUNGLE_LEAVES, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.GREEN + "Jungle")).build();
-        result = metaHandler.setKey(result, "biome_type", "JUNGLE");
-        result = giveColors(result, Color.fromRGB(55, 255, 45));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Jungle", ingredients, result);
-
-        //Mesa
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.TERRACOTTA, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.GOLD + "Mesa")).build();
-        result = metaHandler.setKey(result, "biome_type", "MESA");
-        result = giveColors(result, Color.fromRGB(165, 120, 90));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Mesa", ingredients, result);
-
-        //Roofed Forest
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.DARK_OAK_LEAVES, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.DARK_GREEN + "Roofed Forest")).build();
-        result = metaHandler.setKey(result, "biome_type", "ROOFED_FOREST");
-        result = giveColors(result, Color.fromRGB(25, 90, 25));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Roofed_Forest", ingredients, result);
-
-        //Mushroom Island
-        ingredients = new HashMap<Material, Integer>() {{
-            put(Material.EGG, 1);
-            put(Material.MYCELIUM, 8);
-        }};
-        result = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.LIGHT_PURPLE + "Mushroom Island")).build();
-        result = metaHandler.setKey(result, "biome_type", "MUSHROOM_ISLAND");
-        result = giveColors(result, Color.fromRGB(200, 125, 200));
-        CraftingUtil.addShapelessCrafting("Biomb_Bomb_Mushroom_Island", ingredients, result);
-    }
-
-    private static ItemStack giveColors(ItemStack item, Color... colors) {
         FireworkEffectMeta meta = (FireworkEffectMeta) item.getItemMeta();
-        FireworkEffect effect = FireworkEffect.builder().withColor(colors).build();
+        FireworkEffect effect = FireworkEffect.builder().withColor(fireworkColors).build();
         meta.setEffect(effect);
         item.setItemMeta(meta);
-        return item;
+
+        CraftingUtil.addShapelessCrafting("Biomb_Bomb_" + type, ingredients, item);
+    }
+
+    private void initRecipes() {
+        //Plains
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.GRASS, 8);
+                }},
+                "Plains",
+                ChatColor.GREEN,
+                Color.fromRGB(130, 255, 185)
+        );
+
+        //Ocean
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.KELP, 8);
+                }},
+                "Ocean",
+                ChatColor.BLUE,
+                Color.fromRGB(225, 205, 95)
+        );
+
+        //Forest
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.OAK_LEAVES, 8);
+                }},
+                "Forest",
+                ChatColor.DARK_GREEN,
+                Color.fromRGB(75, 130, 35)
+        );
+
+        //Desert
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.SAND, 8);
+                }},
+                "Desert",
+                ChatColor.YELLOW,
+                Color.fromRGB(255, 240, 150)
+        );
+
+        //Tiaga
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.SPRUCE_LEAVES, 8);
+                }},
+                "Tiaga",
+                ChatColor.DARK_BLUE,
+                Color.fromRGB(90, 115, 60)
+        );
+
+        //Jungle
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.JUNGLE_LEAVES, 8);
+                }},
+                "Jungle",
+                ChatColor.GREEN,
+                Color.fromRGB(55, 255, 45)
+        );
+
+        //Mesa
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.TERRACOTTA, 8);
+                }},
+                "Mesa",
+                ChatColor.GOLD,
+                Color.fromRGB(165, 120, 90)
+        );
+
+        //Roofed Forest
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.DARK_OAK_LEAVES, 8);
+                }},
+                "Roofed_Forest",
+                ChatColor.DARK_GREEN,
+                Color.fromRGB(25, 90, 25)
+        );
+
+        //Mushroom Island
+        this.addRecipe(
+                new HashMap<Material, Integer>() {{
+                    put(Material.EGG, 1);
+                    put(Material.MYCELIUM, 8);
+                }},
+                "Mushroom_Island",
+                ChatColor.LIGHT_PURPLE,
+                Color.fromRGB(200, 125, 200)
+        );
     }
 }

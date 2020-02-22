@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +26,11 @@ public class CobbleGeneratorManager {
     Material generateBlock() {
         if(this.materials.size() == 0) { return Material.COBBLESTONE; }
 
-        List<Double> weights = materials.values().stream().collect(Collectors.toList());
+        List<Double> weights = new ArrayList<>(materials.values());
         double total = weights.stream().mapToDouble(Double::doubleValue).sum();
 
         double randValue = MiniAdditions.getRandom().nextDouble() * total;
-        List<Material> mats = this.materials.keySet().stream().collect(Collectors.toList());
+        List<Material> mats = new ArrayList<>(this.materials.keySet());
 
         for(int index = 0; index < mats.size(); index++) {
             if(randValue < weights.get(index)) {
