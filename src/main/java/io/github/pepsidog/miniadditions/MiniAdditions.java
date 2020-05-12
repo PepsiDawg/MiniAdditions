@@ -57,7 +57,11 @@ public class MiniAdditions extends JavaPlugin {
                 new SlimyBootsListener(),
                 new WoodPileListener()
         );
-        ArrayList<String> names = Lists.newArrayList(modules.stream().map(Module::getName).collect(Collectors.toList()));
+        ArrayList<String> names = new ArrayList<>();
+        for(Module module : modules) {
+            names.add(module.getName());
+        }
+
         this.configManager = new ConfigManager(this, names, true);
 
         for (Module module : modules) {
