@@ -1,20 +1,20 @@
 package io.github.pepsidog.miniadditions.additions.concretemixer;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Cauldron;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ConcreteMixerListener implements Listener {
+public class ConcreteMixerListener extends Module {
     private List<Material> concrete = Arrays.asList(
             Material.BLACK_CONCRETE_POWDER,
             Material.CYAN_CONCRETE_POWDER,
@@ -34,8 +34,14 @@ public class ConcreteMixerListener implements Listener {
             Material.YELLOW_CONCRETE_POWDER);
     private int waterUseChance;
 
-    public ConcreteMixerListener(int useChance) {
-        this.waterUseChance = useChance;
+    public ConcreteMixerListener() {
+        super("ConcreteMixer");
+    }
+
+    @Override
+    public void init(YamlConfiguration config) {
+        super.init(config);
+        this.waterUseChance = config.getInt("water-use-chance", 5);
     }
 
     @EventHandler
@@ -45,9 +51,10 @@ public class ConcreteMixerListener implements Listener {
             Block block = event.getClickedBlock();
 
             if(block != null && block.getType().equals(Material.CAULDRON) && item != null) {
-                Cauldron cauldron = (Cauldron) block.getState().getData();
+                Levelled levelled = (Levelled) block.getBlockData();
                 Material type = item.getType();
-                if(concrete.contains(type) && !cauldron.isEmpty()) {
+                if(concrete.contains(type) && levelled.getLevel() != 0) {
+                    event.setCancelled(true);
                     Material result = Material.valueOf(type.name().substring(0, type.name().length() - 7));
                     block.getWorld().dropItem(block.getLocation().add(0.5, 1.5, 0.5), new ItemStack(result));
 
@@ -58,7 +65,6 @@ public class ConcreteMixerListener implements Listener {
                     }
 
                     if(MiniAdditions.getRandom().nextInt(100) <= this.waterUseChance) {
-                        Levelled levelled = (Levelled) block.getBlockData();
                         levelled.setLevel(levelled.getLevel() - 1);
                         block.setBlockData(levelled);
                     }

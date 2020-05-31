@@ -1,13 +1,17 @@
 package io.github.pepsidog.miniadditions.additions.easypaintings;
 
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Art;
 import org.bukkit.entity.Painting;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class EasyPaintings implements Listener {
+public class EasyPaintings extends Module {
+
+    public EasyPaintings() {
+        super("EasyPaintings");
+    }
 
     @EventHandler
     public void onPaintingClick(PlayerInteractEntityEvent event) {

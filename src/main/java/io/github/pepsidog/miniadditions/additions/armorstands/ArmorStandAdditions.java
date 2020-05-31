@@ -1,17 +1,21 @@
 package io.github.pepsidog.miniadditions.additions.armorstands;
 
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-public class ArmorStandAdditions implements Listener {
+public class ArmorStandAdditions extends Module {
+
+    public ArmorStandAdditions() {
+        super("ArmorStands");
+    }
 
     @EventHandler
     public void onArmorStandInteract(PlayerInteractAtEntityEvent event) {

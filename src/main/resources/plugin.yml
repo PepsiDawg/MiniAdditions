@@ -1,5 +1,12 @@
 main: io.github.pepsidog.miniadditions.MiniAdditions
 name: MiniAdditions
-version: 1.0.0
-api-version: 1.13
+version: 1.1.0
+api-version: 1.15
 description: Adds small additions to minecraft
+commands:
+  synth:
+    description: A tool for making a sound effect
+    usage: /synth [add|remove|edit|list|play]
+  shoot:
+    description: Shoots a glass bottle
+    usage: /shoot
