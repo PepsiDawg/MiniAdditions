@@ -70,6 +70,7 @@ public class MiniAdditions extends JavaPlugin {
         }
 
         loadCrafting();
+        initExperimental();
     }
 
     @Override
@@ -92,9 +93,7 @@ public class MiniAdditions extends JavaPlugin {
     public void initExperimental() {
         this.getCommand("synth").setExecutor(new SoundSynthExperiment());
         this.getLogger().info("Sound Synth enabled");
-    }
 
-    public void initExperimentalCommands() {
         this.getCommand("shoot").setExecutor(new ExperimentalCommands());
         this.getLogger().info("Experimental Commands enabled");
     }
