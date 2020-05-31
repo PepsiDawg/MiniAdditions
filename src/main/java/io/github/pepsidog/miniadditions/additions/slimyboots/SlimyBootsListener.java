@@ -5,6 +5,7 @@ import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.*;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -32,11 +33,13 @@ public class SlimyBootsListener extends Module {
         if(!(event.getEntity() instanceof Player)) {
             return;
         }
+
         Player player = (Player) event.getEntity();
         Vector dir = player.getLocation().getDirection();
 
         if(event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-            if(player.isSneaking() || !ItemMetaHandler.hasKey(player.getInventory().getBoots(), bootsKey, BYTE)) {
+            ItemStack boots = player.getInventory().getBoots();
+            if(player.isSneaking() || boots == null || !ItemMetaHandler.hasKey(boots, bootsKey, BYTE)) {
                 return;
             }
 
