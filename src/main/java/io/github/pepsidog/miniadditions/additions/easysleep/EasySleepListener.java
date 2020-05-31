@@ -4,7 +4,11 @@ import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Statistic;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
@@ -44,8 +48,15 @@ public class EasySleepListener extends Module {
 
             Bukkit.getScheduler().runTaskLater(MiniAdditions.getInstance(), ()->{
                 Bukkit.broadcastMessage(ChatColor.YELLOW + "Wakey wakey, eggs and bakey.");
+                World world = event.getPlayer().getWorld();
                 this.sleeping.clear();
-                event.getPlayer().getWorld().setTime(0);
+                world.setTime(0);
+                world.setStorm(false);
+
+                for(Player player : Bukkit.getOnlinePlayers()) {
+                    player.setStatistic(Statistic.TIME_SINCE_REST, 0);
+                }
+
             }, 100);
         }
     }
