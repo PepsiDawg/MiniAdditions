@@ -26,4 +26,7 @@ public class Module implements IModule, Listener {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public void onDisable() { }
 }
