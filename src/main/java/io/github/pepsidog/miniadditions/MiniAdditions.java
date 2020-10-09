@@ -11,9 +11,9 @@ import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerLis
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
 import io.github.pepsidog.miniadditions.additions.easysleep.EasySleepListener;
-import io.github.pepsidog.miniadditions.additions.experimental.BlockMD;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
+import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
 import io.github.pepsidog.miniadditions.additions.igneousgenerator.IgneousGeneratorListener;
@@ -22,15 +22,12 @@ import io.github.pepsidog.miniadditions.additions.nameping.NamePing;
 import io.github.pepsidog.miniadditions.utils.Module;
 import io.github.pepsidog.miniadditions.additions.woodpile.WoodPileListener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
-
 public class MiniAdditions extends JavaPlugin {
     private static MiniAdditions self;
     private static Random rand;
@@ -45,7 +42,7 @@ public class MiniAdditions extends JavaPlugin {
 
         ArrayList<Module> modules = Lists.newArrayList(
                 new ArmorStandAdditions(),
-                new BiomeBombListener(),
+                //new BiomeBombListener(),
                 new CobbleGeneratorListener(),
                 new ConcreteMixerListener(),
                 new CraftingKeeperListener(),
@@ -76,6 +73,7 @@ public class MiniAdditions extends JavaPlugin {
     @Override
     public void onDisable() {
         saveCrafting();
+        PlayerSettings.getInstance().saveSettings();
     }
 
     public static MiniAdditions getInstance() {
