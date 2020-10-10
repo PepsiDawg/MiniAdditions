@@ -1,11 +1,12 @@
 package io.github.pepsidog.miniadditions.additions.slimyboots;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.*;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -14,18 +15,18 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SlimyBootsListener extends Module {
     private NamespacedKey bootsKey;
-    private final PersistentDataType BYTE = PersistentDataType.BYTE;
+    private final PersistentDataType<Byte, Byte> BYTE = PersistentDataType.BYTE;
 
     public SlimyBootsListener() {
         super("SlimyBoots");
         bootsKey = new NamespacedKey(MiniAdditions.getInstance(), "Slimy_Boots");
-        initRecipies();
+        initRecipes();
     }
 
     @EventHandler
@@ -53,12 +54,14 @@ public class SlimyBootsListener extends Module {
         }
     }
 
-    private void initRecipies() {
+    private void initRecipes() {
         ItemStack result = new ItemStack(Material.LEATHER_BOOTS);
         LeatherArmorMeta itemMeta = (LeatherArmorMeta) result.getItemMeta();
-        itemMeta.setColor(Color.fromRGB(100, 255, 100));
-        itemMeta.setDisplayName(ChatColor.GREEN + "Slimy Boots");
-        itemMeta.setLore(Arrays.asList(ChatColor.GRAY + "A bit squishy but it should protect from falls"));
+        if (itemMeta != null) {
+            itemMeta.setColor(Color.fromRGB(100, 255, 100));
+            itemMeta.setDisplayName(ChatColor.GREEN + "Slimy Boots");
+            itemMeta.setLore(Collections.singletonList(ChatColor.GRAY + "A bit squishy but it should protect from falls"));
+        }
 
         result.setItemMeta(itemMeta);
         ItemMetaHandler.set(result, bootsKey, BYTE, (byte) 1);

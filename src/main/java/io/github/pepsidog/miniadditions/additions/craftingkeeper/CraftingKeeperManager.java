@@ -67,6 +67,7 @@ public class CraftingKeeperManager implements ConfigurationSerializable {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public static CraftingKeeperManager deserialize(Map<String, Object> args) {
         CraftingKeeperManager manager = getInstance();
         Map<Location, ItemStack[]> savedTables = new HashMap<>();
@@ -78,7 +79,7 @@ public class CraftingKeeperManager implements ConfigurationSerializable {
             List<ItemStack> items = new ArrayList<>();
             List<Map<String, Object>> craftingContents = (List<Map<String, Object>>) craftingTable.get("contents");
 
-            craftingContents.stream().forEach(serializedItem -> items.add(ItemStack.deserialize(serializedItem)));
+            craftingContents.forEach(serializedItem -> items.add(ItemStack.deserialize(serializedItem)));
             savedTables.put(loc, items.toArray(new ItemStack[items.size()]));
         }
 

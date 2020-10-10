@@ -1,15 +1,14 @@
 package io.github.pepsidog.miniadditions.additions.improvedshears;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
 import io.github.pepsidog.miniadditions.utils.StringHelper;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
+
+import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
@@ -24,8 +23,7 @@ import java.util.Map;
 public class ShearListener extends Module {
     private int chance;
     private NamespacedKey shearKey;
-    private final PersistentDataType BYTE = PersistentDataType.BYTE;
-    private Material[] colors = new Material[] { Material.BLACK_DYE, Material.RED_DYE, Material.GREEN_DYE, Material.BROWN_DYE, Material.BLUE_DYE, Material.PURPLE_DYE, Material.CYAN_DYE, Material.LIGHT_GRAY_DYE, Material.GRAY_DYE, Material.PINK_DYE, Material.LIME_DYE, Material.YELLOW_DYE, Material.LIGHT_BLUE_DYE, Material.MAGENTA_DYE, Material.ORANGE_DYE, Material.WHITE_DYE };
+    private final PersistentDataType<Byte, Byte> BYTE = PersistentDataType.BYTE;
 
     public ShearListener() {
         super("ImprovedShears");
@@ -36,7 +34,7 @@ public class ShearListener extends Module {
     public void init(YamlConfiguration config) {
         super.init(config);
         this.chance = config.getInt("dye-chance", 25);
-        this.initRecipies();
+        this.initRecipes();
     }
 
     @EventHandler
@@ -49,12 +47,15 @@ public class ShearListener extends Module {
             if(itemUsed.getType().equals(Material.SHEARS) && ItemMetaHandler.hasKey(itemUsed, this.shearKey, BYTE)) {
                 if(MiniAdditions.getRandom().nextDouble() <= (chance / 100.0)) {
                     event.setCancelled(true);
-                    ItemStack drop = new ItemStack(colors[sheep.getColor().getDyeData()]);
-                    int amount = (int) Math.floor(MiniAdditions.getRandom().nextDouble() * 3) + 1;
-                    drop.setAmount(amount);
-                    sheep.setSheared(true);
-                    sheep.getWorld().dropItemNaturally(sheep.getLocation().clone().add(0, 0.5, 0), drop);
-                    player.getWorld().playSound(sheep.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+                    DyeColor color = sheep.getColor();
+                    if (color != null) {
+                        ItemStack drop = new ItemStack(Material.valueOf(color.name() + "_DYE"));
+                        int amount = (int) Math.floor(MiniAdditions.getRandom().nextDouble() * 3) + 1;
+                        drop.setAmount(amount);
+                        sheep.setSheared(true);
+                        sheep.getWorld().dropItemNaturally(sheep.getLocation().clone().add(0, 0.5, 0), drop);
+                        player.getWorld().playSound(sheep.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+                    }
                 }
             }
         }
@@ -72,7 +73,7 @@ public class ShearListener extends Module {
         return main;
     }
 
-    private void initRecipies() {
+    private void initRecipes() {
         Map<Material, Integer> ingredients = new HashMap<Material, Integer>() {{
             put(Material.SHEARS, 2);
             put(Material.DIAMOND, 1);

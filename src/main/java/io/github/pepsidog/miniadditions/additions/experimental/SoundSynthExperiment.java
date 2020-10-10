@@ -2,7 +2,9 @@ package io.github.pepsidog.miniadditions.additions.experimental;
 
 import io.github.mrsperry.mcutils.sound.SoundByte;
 import io.github.mrsperry.mcutils.sound.SoundSynth;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

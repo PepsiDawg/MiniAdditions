@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.playersettings;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -27,7 +28,12 @@ public class PlayerSettings {
 
         defaultValues = config.getConfigurationSection("settings.defaults");
 
-        Set<String> playerKeys = config.getConfigurationSection("settings.players").getKeys(false);
+        ConfigurationSection players = config.getConfigurationSection("settings.players");
+        if (players == null) {
+            return;
+        }
+
+        Set<String> playerKeys = players.getKeys(false);
         playerValues = new HashMap<>();
         for(String key : playerKeys) {
             playerValues.put(UUID.fromString(key), config.getConfigurationSection("settings.players." + key));

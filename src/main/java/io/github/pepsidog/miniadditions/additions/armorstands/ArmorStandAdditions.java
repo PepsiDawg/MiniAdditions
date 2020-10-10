@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.armorstands;
 
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -12,7 +13,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class ArmorStandAdditions extends Module {
-
     public ArmorStandAdditions() {
         super("ArmorStands");
     }
@@ -23,7 +23,7 @@ public class ArmorStandAdditions extends Module {
             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
             Entity entity = event.getRightClicked();
 
-            if(item != null && entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
+            if(entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
                 Material type = item.getType();
                 ArmorStand armorStand = (ArmorStand) entity;
 

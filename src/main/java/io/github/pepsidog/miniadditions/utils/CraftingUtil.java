@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.utils;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

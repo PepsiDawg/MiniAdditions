@@ -14,10 +14,6 @@ public class ItemBuilder {
     private List<String> lore;
     private String name;
 
-    public ItemBuilder() {
-        this(Material.AIR, 1);
-    }
-
     public ItemBuilder(Material material) {
         this(material, 1);
     }
