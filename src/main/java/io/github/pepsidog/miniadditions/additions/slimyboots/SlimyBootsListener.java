@@ -15,13 +15,13 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SlimyBootsListener extends Module {
     private NamespacedKey bootsKey;
-    private final PersistentDataType BYTE = PersistentDataType.BYTE;
+    private final PersistentDataType<Byte, Byte> BYTE = PersistentDataType.BYTE;
 
     public SlimyBootsListener() {
         super("SlimyBoots");
@@ -57,9 +57,11 @@ public class SlimyBootsListener extends Module {
     private void initRecipes() {
         ItemStack result = new ItemStack(Material.LEATHER_BOOTS);
         LeatherArmorMeta itemMeta = (LeatherArmorMeta) result.getItemMeta();
-        itemMeta.setColor(Color.fromRGB(100, 255, 100));
-        itemMeta.setDisplayName(ChatColor.GREEN + "Slimy Boots");
-        itemMeta.setLore(Arrays.asList(ChatColor.GRAY + "A bit squishy but it should protect from falls"));
+        if (itemMeta != null) {
+            itemMeta.setColor(Color.fromRGB(100, 255, 100));
+            itemMeta.setDisplayName(ChatColor.GREEN + "Slimy Boots");
+            itemMeta.setLore(Collections.singletonList(ChatColor.GRAY + "A bit squishy but it should protect from falls"));
+        }
 
         result.setItemMeta(itemMeta);
         ItemMetaHandler.set(result, bootsKey, BYTE, (byte) 1);

@@ -17,6 +17,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
@@ -29,8 +30,8 @@ import java.util.*;
 public class BiomeBombListener extends Module {
     private NamespacedKey biomeBombTypeKey;
     private NamespacedKey biomeBombColorKey;
-    private final PersistentDataType STRING = PersistentDataType.STRING;
-    private final PersistentDataType INT = PersistentDataType.INTEGER;
+    private final PersistentDataType<String, String> STRING = PersistentDataType.STRING;
+    private final PersistentDataType<Integer, Integer> INT = PersistentDataType.INTEGER;
     private int blastRange;
 
     public BiomeBombListener() {
@@ -48,13 +49,13 @@ public class BiomeBombListener extends Module {
 
     @EventHandler
     public void onBiomeBombUse(PlayerInteractEvent event) {
-        if(event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if(event.getHand() == EquipmentSlot.OFF_HAND) {
             return;
         }
 
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         Player player = event.getPlayer();
-        if(item != null && ItemMetaHandler.hasKey(item, biomeBombTypeKey, STRING)) {
+        if(ItemMetaHandler.hasKey(item, biomeBombTypeKey, STRING)) {
             CustomProjectile biomeBomb = getBiomeBomb(item, player.getEyeLocation(), player.getLocation().getDirection());
             item.setAmount(item.getAmount() - 1);
             biomeBomb.launch();
@@ -79,6 +80,9 @@ public class BiomeBombListener extends Module {
 
                         int color = (int)proj.getMetadata("color");
                         World world = proj.getLocation().getWorld();
+                        if (world == null) {
+                            return;
+                        }
                         Location origin = proj.getLocation().clone();
 
                         new BukkitRunnable() {
@@ -112,11 +116,18 @@ public class BiomeBombListener extends Module {
                         proj.destroy();
                     }
                 });
-        ArmorStand armorStand = (ArmorStand) location.getWorld().spawnEntity(location.clone().subtract(0, 2, 0), EntityType.ARMOR_STAND);
+        World world = location.getWorld();
+        if (world == null) {
+            return biomeBomb;
+        }
+        ArmorStand armorStand = (ArmorStand) world.spawnEntity(location.clone().subtract(0, 2, 0), EntityType.ARMOR_STAND);
         armorStand.setInvulnerable(true);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
-        armorStand.setHelmet(item.clone());
+        EntityEquipment equipment = armorStand.getEquipment();
+        if (equipment != null) {
+            equipment.setHelmet(item.clone());
+        }
 
         biomeBomb.setMetaData("biomebomb_as", armorStand);
         biomeBomb.setMetaData("type", ItemMetaHandler.get(item, biomeBombTypeKey, STRING));
@@ -128,15 +139,17 @@ public class BiomeBombListener extends Module {
         String displayName = type.replace('_', ' ');
         ItemBuilder builder = new ItemBuilder(Material.FIREWORK_STAR)
                 .setName(textColor + displayName + " " + ChatColor.GRAY + "Biome Bomb");
-        ItemStack item = builder.setLore(Arrays.asList(ChatColor.GRAY + "Type: " + ChatColor.GOLD + displayName)).build();
+        ItemStack item = builder.setLore(Collections.singletonList(ChatColor.GRAY + "Type: " + ChatColor.GOLD + displayName)).build();
 
         ItemMetaHandler.set(item, biomeBombTypeKey, STRING, type.toUpperCase());
         ItemMetaHandler.set(item, biomeBombColorKey, INT, fireworkColor.asRGB());
 
         FireworkEffectMeta meta = (FireworkEffectMeta) item.getItemMeta();
-        FireworkEffect effect = FireworkEffect.builder().withColor(fireworkColor).build();
-        meta.setEffect(effect);
-        item.setItemMeta(meta);
+        if (meta != null) {
+            FireworkEffect effect = FireworkEffect.builder().withColor(fireworkColor).build();
+            meta.setEffect(effect);
+            item.setItemMeta(meta);
+        }
 
         CraftingUtil.addShapelessCrafting("Biomb_Bomb_" + type, ingredients, item);
     }

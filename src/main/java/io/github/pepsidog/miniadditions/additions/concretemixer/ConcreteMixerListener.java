@@ -71,7 +71,6 @@ public class ConcreteMixerListener extends Module {
                     }
                 }
             }
-
         }
     }
 }

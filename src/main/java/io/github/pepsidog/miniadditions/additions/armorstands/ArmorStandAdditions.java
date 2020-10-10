@@ -23,7 +23,7 @@ public class ArmorStandAdditions extends Module {
             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
             Entity entity = event.getRightClicked();
 
-            if(item != null && entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
+            if(entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
                 Material type = item.getType();
                 ArmorStand armorStand = (ArmorStand) entity;
 

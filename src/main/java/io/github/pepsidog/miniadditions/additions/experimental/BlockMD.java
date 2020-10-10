@@ -33,7 +33,7 @@ public class BlockMD extends Module {
         if(event.getHand() != null && event.getHand().equals(EquipmentSlot.HAND) && event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if(event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
                 Block block = event.getClickedBlock();
-                if(block.hasMetadata("miniadditions_id")) {
+                if(block != null && block.hasMetadata("miniadditions_id")) {
                     Bukkit.broadcastMessage(block.getMetadata("miniadditions_id").get(0).asString());
                 }
             }

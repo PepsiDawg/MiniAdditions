@@ -4,13 +4,14 @@ import io.github.pepsidog.miniadditions.utils.CustomProjectile;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class BottleProjectile {
-
     public static CustomProjectile getBottleProjectile(Location location, Vector direction) {
         CustomProjectile bottle = new CustomProjectile(location, direction, 1, 200)
                 .addAcceleration(0.2, 2.5)
@@ -30,11 +31,19 @@ public class BottleProjectile {
                     }
                 });
 
-        ArmorStand armorStand = (ArmorStand) location.getWorld().spawnEntity(location.clone().subtract(0, 1.7, 0), EntityType.ARMOR_STAND);
+        World world = location.getWorld();
+        if (world == null) {
+            return bottle;
+        }
+
+        ArmorStand armorStand = (ArmorStand) world.spawnEntity(location.clone().subtract(0, 1.7, 0), EntityType.ARMOR_STAND);
         armorStand.setInvulnerable(true);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
-        armorStand.setHelmet(new ItemStack(Material.GLASS_BOTTLE));
+        EntityEquipment equipment = armorStand.getEquipment();
+        if (equipment != null) {
+            equipment.setHelmet(new ItemStack(Material.GLASS_BOTTLE));
+        }
 
         bottle.setMetaData("proj_as", armorStand);
         return bottle;

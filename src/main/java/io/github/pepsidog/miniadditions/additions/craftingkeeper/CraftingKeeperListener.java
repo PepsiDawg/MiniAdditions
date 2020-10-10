@@ -69,7 +69,7 @@ public class CraftingKeeperListener extends Module {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(event.getHand() != null && event.getHand().equals(EquipmentSlot.HAND)) {
                 Block block = event.getClickedBlock();
-                if(block.getType().equals(Material.CRAFTING_TABLE)) {
+                if(block != null && block.getType().equals(Material.CRAFTING_TABLE)) {
                     this.tableBlocks.put(event.getPlayer().getUniqueId(), block.getLocation());
                 }
             }
