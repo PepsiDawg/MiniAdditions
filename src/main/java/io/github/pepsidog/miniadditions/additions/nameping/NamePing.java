@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.nameping;
 
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;

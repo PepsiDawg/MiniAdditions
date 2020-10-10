@@ -2,6 +2,7 @@ package io.github.pepsidog.miniadditions.additions.woodpile;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;

@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import io.github.mrsperry.mcutils.ConfigManager;
 
 import io.github.pepsidog.miniadditions.additions.armorstands.ArmorStandAdditions;
-import io.github.pepsidog.miniadditions.additions.biomebombs.BiomeBombListener;
 import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
@@ -29,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.*;
+
 public class MiniAdditions extends JavaPlugin {
     private static MiniAdditions self;
     private static Random rand;
@@ -43,7 +43,6 @@ public class MiniAdditions extends JavaPlugin {
 
         ArrayList<Module> modules = Lists.newArrayList(
                 new ArmorStandAdditions(),
-                //new BiomeBombListener(),
                 new CobbleGeneratorListener(),
                 new ConcreteMixerListener(),
                 new CraftingKeeperListener(),
@@ -113,7 +112,7 @@ public class MiniAdditions extends JavaPlugin {
     private void loadCrafting() {
         try {
             FileConfiguration config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "crafting_tables.yml"));
-            CraftingKeeperManager manager = (CraftingKeeperManager) config.get("tables");
+            config.get("tables");
         } catch (Exception e) {
             getLogger().warning("Error loading crafting tables!");
             e.printStackTrace();

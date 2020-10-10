@@ -3,6 +3,7 @@ package io.github.pepsidog.miniadditions.additions.igneousgenerator;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.BlockUtils;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;

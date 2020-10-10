@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.playersettings;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

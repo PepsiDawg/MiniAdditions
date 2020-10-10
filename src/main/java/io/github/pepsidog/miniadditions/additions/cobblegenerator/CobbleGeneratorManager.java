@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.cobblegenerator;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CobbleGeneratorManager {
     private static CobbleGeneratorManager self;

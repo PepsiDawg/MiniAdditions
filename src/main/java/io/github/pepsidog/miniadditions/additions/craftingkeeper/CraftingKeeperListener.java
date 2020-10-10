@@ -1,6 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.craftingkeeper;
 
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

@@ -2,6 +2,7 @@ package io.github.pepsidog.miniadditions.additions.easysleep;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
@@ -89,6 +90,4 @@ public class EasySleepListener extends Module {
     private String getPlayersInBed() {
         return "(" + ChatColor.GREEN + sleeping.size() + ChatColor.YELLOW + "/" + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + ChatColor.YELLOW + ")";
     }
-
-
 }

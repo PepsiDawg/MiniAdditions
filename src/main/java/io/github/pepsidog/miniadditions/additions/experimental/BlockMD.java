@@ -2,6 +2,7 @@ package io.github.pepsidog.miniadditions.additions.experimental;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +16,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.UUID;
 
 public class BlockMD extends Module {
-
     public BlockMD() {
         super("BlockMD");
     }

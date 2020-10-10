@@ -1,7 +1,7 @@
 package io.github.pepsidog.miniadditions.additions.experimental;
 
-
 import io.github.pepsidog.miniadditions.utils.CustomProjectile;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;

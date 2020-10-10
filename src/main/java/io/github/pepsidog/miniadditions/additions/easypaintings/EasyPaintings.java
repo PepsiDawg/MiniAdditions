@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 public class EasyPaintings extends Module {
-
     public EasyPaintings() {
         super("EasyPaintings");
     }

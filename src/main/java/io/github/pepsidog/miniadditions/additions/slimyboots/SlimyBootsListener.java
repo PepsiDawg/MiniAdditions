@@ -1,11 +1,12 @@
 package io.github.pepsidog.miniadditions.additions.slimyboots;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.*;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -25,7 +26,7 @@ public class SlimyBootsListener extends Module {
     public SlimyBootsListener() {
         super("SlimyBoots");
         bootsKey = new NamespacedKey(MiniAdditions.getInstance(), "Slimy_Boots");
-        initRecipies();
+        initRecipes();
     }
 
     @EventHandler
@@ -53,7 +54,7 @@ public class SlimyBootsListener extends Module {
         }
     }
 
-    private void initRecipies() {
+    private void initRecipes() {
         ItemStack result = new ItemStack(Material.LEATHER_BOOTS);
         LeatherArmorMeta itemMeta = (LeatherArmorMeta) result.getItemMeta();
         itemMeta.setColor(Color.fromRGB(100, 255, 100));

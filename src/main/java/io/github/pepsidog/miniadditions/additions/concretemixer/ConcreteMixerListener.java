@@ -2,6 +2,7 @@ package io.github.pepsidog.miniadditions.additions.concretemixer;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;

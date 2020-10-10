@@ -1,11 +1,13 @@
 package io.github.pepsidog.miniadditions.additions.improvedshears;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
+
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
 import io.github.pepsidog.miniadditions.utils.StringHelper;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -36,7 +38,7 @@ public class ShearListener extends Module {
     public void init(YamlConfiguration config) {
         super.init(config);
         this.chance = config.getInt("dye-chance", 25);
-        this.initRecipies();
+        this.initRecipes();
     }
 
     @EventHandler
@@ -72,7 +74,7 @@ public class ShearListener extends Module {
         return main;
     }
 
-    private void initRecipies() {
+    private void initRecipes() {
         Map<Material, Integer> ingredients = new HashMap<Material, Integer>() {{
             put(Material.SHEARS, 2);
             put(Material.DIAMOND, 1);
