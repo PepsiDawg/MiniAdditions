@@ -14,6 +14,7 @@ import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalComma
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.additions.leadattacher.LeadAttacherListener;
 import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
+import io.github.pepsidog.miniadditions.additions.nosheepgriefing.NoSheepGriefingListener;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
 import io.github.pepsidog.miniadditions.additions.igneousgenerator.IgneousGeneratorListener;
@@ -53,7 +54,8 @@ public class MiniAdditions extends JavaPlugin {
                 new NamePing(),
                 new SlimyBootsListener(),
                 new WoodPileListener(),
-                new LeadAttacherListener()
+                new LeadAttacherListener(),
+                new NoSheepGriefingListener()
         );
         ArrayList<String> names = new ArrayList<>();
         for(Module module : modules) {
