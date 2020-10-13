@@ -12,6 +12,7 @@ import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperM
 import io.github.pepsidog.miniadditions.additions.easysleep.EasySleepListener;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
+import io.github.pepsidog.miniadditions.additions.featherplucker.FeatherPlucker;
 import io.github.pepsidog.miniadditions.additions.leadattacher.LeadAttacherListener;
 import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
 import io.github.pepsidog.miniadditions.additions.nosheepgriefing.NoSheepGriefingListener;
@@ -55,7 +56,8 @@ public class MiniAdditions extends JavaPlugin {
                 new SlimyBootsListener(),
                 new WoodPileListener(),
                 new LeadAttacherListener(),
-                new NoSheepGriefingListener()
+                new NoSheepGriefingListener(),
+                new FeatherPlucker()
         );
         ArrayList<String> names = new ArrayList<>();
         for(Module module : modules) {
