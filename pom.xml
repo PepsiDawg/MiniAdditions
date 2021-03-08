@@ -53,8 +53,8 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <excludes>
-                                    <exclude>org.spigotmc:Spigot</exclude>
-                                    <exclude>org.bukkit:craftbukkit</exclude>
+                                    <exclude>org.spigotmc</exclude>
+                                    <exclude>org.bukkit</exclude>
                                 </excludes>
                             </artifactSet>
                         </configuration>
