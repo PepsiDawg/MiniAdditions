@@ -36,6 +36,11 @@ public class InventoryInspector extends Module implements Listener {
             return;
         }
 
+        final Player player = event.getPlayer();
+        if (!player.isSneaking()) {
+            return;
+        }
+
         final Entity entity = event.getRightClicked();
         final Player clicked;
         if (entity instanceof Player) {
@@ -44,7 +49,6 @@ public class InventoryInspector extends Module implements Listener {
             return;
         }
 
-        final Player player = event.getPlayer();
         final GameMode mode = player.getGameMode();
         if (mode == GameMode.CREATIVE || mode == GameMode.SPECTATOR) {
             player.openInventory(this.createInventory(clicked));
