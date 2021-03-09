@@ -54,10 +54,15 @@ public class EasySleepListener extends Module {
                 world.setTime(0);
                 world.setStorm(false);
 
-                for (Player player : Bukkit.getOnlinePlayers()) {
+                for (UUID id : this.sleeping) {
+                    final Player player = Bukkit.getPlayer(id);
+                    if (player == null) {
+                        continue;
+                    }
+
                     player.setStatistic(Statistic.TIME_SINCE_REST, 0);
                 }
-
+                this.sleeping.clear();
             }, 100);
         }
     }
