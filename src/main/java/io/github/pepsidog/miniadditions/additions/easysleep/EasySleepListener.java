@@ -50,7 +50,6 @@ public class EasySleepListener extends Module {
             wakeTask = Bukkit.getScheduler().runTaskLater(MiniAdditions.getInstance(), () -> {
                 Bukkit.broadcastMessage(ChatColor.YELLOW + "Wakey wakey, eggs and bakey.");
                 World world = event.getPlayer().getWorld();
-                this.sleeping.clear();
                 world.setTime(0);
                 world.setStorm(false);
 
