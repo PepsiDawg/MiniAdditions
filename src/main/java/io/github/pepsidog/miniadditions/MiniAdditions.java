@@ -1,36 +1,34 @@
 package io.github.pepsidog.miniadditions;
 
 import com.google.common.collect.Lists;
-
 import io.github.mrsperry.mcutils.ConfigManager;
-
 import io.github.pepsidog.miniadditions.additions.armorstands.ArmorStandAdditions;
 import io.github.pepsidog.miniadditions.additions.cobblegenerator.CobbleGeneratorListener;
 import io.github.pepsidog.miniadditions.additions.concretemixer.ConcreteMixerListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperListener;
 import io.github.pepsidog.miniadditions.additions.craftingkeeper.CraftingKeeperManager;
+import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
 import io.github.pepsidog.miniadditions.additions.easysleep.EasySleepListener;
 import io.github.pepsidog.miniadditions.additions.experimental.ExperimentalCommands;
 import io.github.pepsidog.miniadditions.additions.experimental.SoundSynthExperiment;
 import io.github.pepsidog.miniadditions.additions.featherplucker.FeatherPlucker;
-import io.github.pepsidog.miniadditions.additions.inventoryinspector.InventoryInspector;
-import io.github.pepsidog.miniadditions.additions.leadattacher.LeadAttacherListener;
-import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
-import io.github.pepsidog.miniadditions.additions.nosheepgriefing.NoSheepGriefingListener;
-import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
-import io.github.pepsidog.miniadditions.additions.easypaintings.EasyPaintings;
 import io.github.pepsidog.miniadditions.additions.igneousgenerator.IgneousGeneratorListener;
 import io.github.pepsidog.miniadditions.additions.improvedshears.ShearListener;
+import io.github.pepsidog.miniadditions.additions.inventoryinspector.InventoryInspector;
+import io.github.pepsidog.miniadditions.additions.leadattacher.LeadAttacherListener;
 import io.github.pepsidog.miniadditions.additions.nameping.NamePing;
-import io.github.pepsidog.miniadditions.utils.Module;
+import io.github.pepsidog.miniadditions.additions.nosheepgriefing.NoSheepGriefingListener;
+import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
+import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.additions.woodpile.WoodPileListener;
-
+import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MiniAdditions extends JavaPlugin {
     private static MiniAdditions self;
@@ -62,7 +60,7 @@ public class MiniAdditions extends JavaPlugin {
                 new InventoryInspector()
         );
         ArrayList<String> names = new ArrayList<>();
-        for(Module module : modules) {
+        for (Module module : modules) {
             names.add(module.getName());
         }
 

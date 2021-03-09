@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.cobblegenerator;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,14 +16,14 @@ public class CobbleGeneratorListener extends Module {
     public void init(YamlConfiguration config) {
         super.init(config);
 
-        if(config.isConfigurationSection("blocks")) {
+        if (config.isConfigurationSection("blocks")) {
             CobbleGeneratorManager.loadConfig(config.getConfigurationSection("blocks"));
         }
     }
 
     @EventHandler
     public void onFromTo(BlockFormEvent event) {
-        if(event.getNewState().getType().equals(Material.COBBLESTONE)) {
+        if (event.getNewState().getType().equals(Material.COBBLESTONE)) {
             event.getNewState().setType(CobbleGeneratorManager.getInstance().generateBlock());
             event.getNewState().getWorld().playSound(event.getNewState().getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1f, 1.5f);
         }

@@ -2,7 +2,6 @@ package io.github.pepsidog.miniadditions.additions.experimental;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -24,16 +23,16 @@ public class BlockMD extends Module {
     public void onBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlock();
         String id = UUID.randomUUID().toString();
-        block.setMetadata("miniadditions_id", new FixedMetadataValue(MiniAdditions.getInstance(),id));
+        block.setMetadata("miniadditions_id", new FixedMetadataValue(MiniAdditions.getInstance(), id));
         Bukkit.broadcastMessage("Placed " + block.getType().name() + " with id " + id);
     }
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent event) {
-        if(event.getHand() != null && event.getHand().equals(EquipmentSlot.HAND) && event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            if(event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+        if (event.getHand() != null && event.getHand().equals(EquipmentSlot.HAND) && event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
                 Block block = event.getClickedBlock();
-                if(block != null && block.hasMetadata("miniadditions_id")) {
+                if (block != null && block.hasMetadata("miniadditions_id")) {
                     Bukkit.broadcastMessage(block.getMetadata("miniadditions_id").get(0).asString());
                 }
             }

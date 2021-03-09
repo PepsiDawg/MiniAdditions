@@ -1,11 +1,9 @@
 package io.github.pepsidog.miniadditions.additions.slimyboots;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
-
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SlimyBootsListener extends Module {
-    private NamespacedKey bootsKey;
+    private final NamespacedKey bootsKey;
     private final PersistentDataType<Byte, Byte> BYTE = PersistentDataType.BYTE;
 
     public SlimyBootsListener() {
@@ -31,16 +29,16 @@ public class SlimyBootsListener extends Module {
 
     @EventHandler
     public void onFall(EntityDamageEvent event) {
-        if(!(event.getEntity() instanceof Player)) {
+        if (!(event.getEntity() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getEntity();
         Vector dir = player.getLocation().getDirection();
 
-        if(event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
             ItemStack boots = player.getInventory().getBoots();
-            if(player.isSneaking() || boots == null || !ItemMetaHandler.hasKey(boots, bootsKey, BYTE)) {
+            if (player.isSneaking() || boots == null || !ItemMetaHandler.hasKey(boots, bootsKey, BYTE)) {
                 return;
             }
 
@@ -65,7 +63,10 @@ public class SlimyBootsListener extends Module {
 
         result.setItemMeta(itemMeta);
         ItemMetaHandler.set(result, bootsKey, BYTE, (byte) 1);
-        Map<Character, Material> ingredients = new HashMap<Character, Material>() {{ put('B', Material.LEATHER_BOOTS); put('S', Material.SLIME_BLOCK); }};
+        Map<Character, Material> ingredients = new HashMap<Character, Material>() {{
+            put('B', Material.LEATHER_BOOTS);
+            put('S', Material.SLIME_BLOCK);
+        }};
         CraftingUtil.addShapedCrafting("slimy_boots", ingredients, result, "SSS", "SBS", "SSS");
     }
 }

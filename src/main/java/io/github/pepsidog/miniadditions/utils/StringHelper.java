@@ -6,21 +6,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StringHelper {
-    private static List<ChatColor> rainbowColors = Arrays.asList(ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.BLUE, ChatColor.LIGHT_PURPLE);
+    private static final List<ChatColor> rainbowColors = Arrays.asList(ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.BLUE, ChatColor.LIGHT_PURPLE);
+
     public static String rainbowfy(String str) {
         int index = 0;
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
-        for(String s : str.split("")) {
-            if(s.equals(" ")) {
-                result += s;
+        for (String s : str.split("")) {
+            if (s.equals(" ")) {
+                result.append(s);
             } else {
 
-                result += rainbowColors.get(index) + s;
+                result.append(rainbowColors.get(index)).append(s);
                 index = (index + 1) % rainbowColors.size();
             }
         }
 
-        return result;
+        return result.toString();
     }
 }

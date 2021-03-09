@@ -2,9 +2,7 @@ package io.github.pepsidog.miniadditions.additions.experimental;
 
 import io.github.mrsperry.mcutils.sound.SoundByte;
 import io.github.mrsperry.mcutils.sound.SoundSynth;
-
 import io.github.pepsidog.miniadditions.MiniAdditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -18,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoundSynthExperiment implements CommandExecutor {
-    private Map<Player, SoundSynth> soundSynths;
+    private final Map<Player, SoundSynth> soundSynths;
 
     public SoundSynthExperiment() {
         soundSynths = new HashMap<>();
@@ -26,19 +24,19 @@ public class SoundSynthExperiment implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(!(commandSender instanceof Player)) {
+        if (!(commandSender instanceof Player)) {
             commandSender.sendMessage("Only players can use this command");
             return true;
         }
 
         Player player = (Player) commandSender;
 
-        if(!soundSynths.containsKey(player)) {
+        if (!soundSynths.containsKey(player)) {
             this.soundSynths.put(player, new SoundSynth());
         }
 
-        if(command.getName().equalsIgnoreCase("synth")) {
-            if(args.length > 0) {
+        if (command.getName().equalsIgnoreCase("synth")) {
+            if (args.length > 0) {
                 String subCommand = args[0];
                 args = Arrays.copyOfRange(args, 1, args.length);
 
@@ -75,7 +73,7 @@ public class SoundSynthExperiment implements CommandExecutor {
 
     private void add(Player player, String[] args) {
         SoundSynth pSynth = soundSynths.get(player);
-        if(args.length == 4) {
+        if (args.length == 4) {
             try {
                 pSynth.add(new SoundByte(Sound.valueOf(args[0].toUpperCase()), Float.parseFloat(args[1]), Float.parseFloat(args[2]), Integer.parseInt(args[3])));
                 player.sendMessage(ChatColor.GREEN + "Sound added!");
@@ -89,7 +87,7 @@ public class SoundSynthExperiment implements CommandExecutor {
 
     private void remove(Player player, String[] args) {
         SoundSynth pSynth = soundSynths.get(player);
-        if(args.length == 1) {
+        if (args.length == 1) {
             try {
                 pSynth.remove(Integer.parseInt(args[0]));
                 player.sendMessage(ChatColor.GREEN + "Sound removed!");
@@ -103,7 +101,7 @@ public class SoundSynthExperiment implements CommandExecutor {
 
     private void edit(Player player, String[] args) {
         SoundSynth pSynth = soundSynths.get(player);
-        if(args.length == 5) {
+        if (args.length == 5) {
             try {
                 pSynth.edit(new SoundByte(Sound.valueOf(args[1].toUpperCase()), Float.parseFloat(args[2]), Float.parseFloat(args[3]), Integer.parseInt(args[4])), Integer.parseInt(args[0]));
                 player.sendMessage(ChatColor.GREEN + "Sound added!");

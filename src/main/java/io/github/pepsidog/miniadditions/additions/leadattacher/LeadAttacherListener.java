@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.leadattacher;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;

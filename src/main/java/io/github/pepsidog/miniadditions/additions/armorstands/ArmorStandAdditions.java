@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.armorstands;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -19,23 +18,27 @@ public class ArmorStandAdditions extends Module {
 
     @EventHandler
     public void onArmorStandInteract(PlayerInteractAtEntityEvent event) {
-        if(event.getHand().equals(EquipmentSlot.HAND)) {
+        if (event.getHand().equals(EquipmentSlot.HAND)) {
             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
             Entity entity = event.getRightClicked();
 
-            if(entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
+            if (entity.getType().equals(EntityType.ARMOR_STAND) && event.getPlayer().isSneaking()) {
                 Material type = item.getType();
                 ArmorStand armorStand = (ArmorStand) entity;
 
                 switch (type) {
                     case STICK:
-                        if(armorStand.hasArms()) { break; }
+                        if (armorStand.hasArms()) {
+                            break;
+                        }
                         event.setCancelled(true);
                         armorStand.setArms(true);
                         removeOneMainHand(event.getPlayer());
                         break;
                     case SUGAR:
-                        if(armorStand.isSmall()) { break; }
+                        if (armorStand.isSmall()) {
+                            break;
+                        }
                         event.setCancelled(true);
                         armorStand.setSmall(true);
                         removeOneMainHand(event.getPlayer());
@@ -50,7 +53,7 @@ public class ArmorStandAdditions extends Module {
     private void removeOneMainHand(Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if(item.getAmount() > 1) {
+        if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
         } else {
             player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));

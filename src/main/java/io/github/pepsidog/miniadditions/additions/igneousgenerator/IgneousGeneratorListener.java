@@ -3,7 +3,6 @@ package io.github.pepsidog.miniadditions.additions.igneousgenerator;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.BlockUtils;
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IgneousGeneratorListener extends Module {
-    private List<Material> igneousMaterials = Arrays.asList(Material.DIORITE, Material.GRANITE, Material.ANDESITE);
+    private final List<Material> igneousMaterials = Arrays.asList(Material.DIORITE, Material.GRANITE, Material.ANDESITE);
 
     public IgneousGeneratorListener() {
         super("IgneousGenerator");
@@ -24,8 +23,8 @@ public class IgneousGeneratorListener extends Module {
     @EventHandler
     public void blockFromToEvent(BlockFromToEvent event) {
         Block to = event.getToBlock();
-        if(event.getBlock().getType().equals(Material.WATER)) {
-            if(BlockUtils.isNextTo(to, Material.MAGMA_BLOCK)) {
+        if (event.getBlock().getType().equals(Material.WATER)) {
+            if (BlockUtils.isNextTo(to, Material.MAGMA_BLOCK)) {
                 Material rock = this.igneousMaterials.get(MiniAdditions.getRandom().nextInt(3));
                 event.setCancelled(true);
                 new BukkitRunnable() {

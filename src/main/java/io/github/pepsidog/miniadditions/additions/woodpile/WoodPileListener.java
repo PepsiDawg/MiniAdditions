@@ -2,7 +2,6 @@ package io.github.pepsidog.miniadditions.additions.woodpile;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -17,7 +16,7 @@ import java.util.Map;
 
 public class WoodPileListener extends Module {
     private int logConvertTime;
-    private Map<WoodPile, BukkitRunnable> woodPiles;
+    private final Map<WoodPile, BukkitRunnable> woodPiles;
 
     public WoodPileListener() {
         super("WoodPile");
@@ -34,27 +33,27 @@ public class WoodPileListener extends Module {
     public void blockPlaceEvent(BlockPlaceEvent event) {
         Material replaced = event.getBlockReplacedState().getType();
 
-        if(replaced.equals(Material.FIRE) && WoodPile.isValidCovering(event.getBlock())) {
+        if (replaced.equals(Material.FIRE) && WoodPile.isValidCovering(event.getBlock())) {
             WoodPile wp = new WoodPile();
-            if(wp.checkValid(event.getBlock())) {
+            if (wp.checkValid(event.getBlock())) {
                 woodPiles.put(wp, new BukkitRunnable() {
-                    int lifespan = wp.getFuelSize() * logConvertTime * 20;
+                    final int lifespan = wp.getFuelSize() * logConvertTime * 20;
                     int age = 0;
 
                     @Override
                     public void run() {
-                        if(age > lifespan) {
+                        if (age > lifespan) {
                             wp.convertFuel();
                             this.cancel();
                             woodPiles.remove(wp);
                             event.getBlock().getWorld().playSound(event.getBlock().getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 0.5f, 0.5f);
                         }
 
-                        if(age%10 == 0) {
+                        if (age % 10 == 0) {
                             wp.showBurning(Particle.SMOKE_LARGE);
                         }
 
-                        if(age%40 == 0 && MiniAdditions.getRandom().nextBoolean()) {
+                        if (age % 40 == 0 && MiniAdditions.getRandom().nextBoolean()) {
                             event.getBlock().getWorld().playSound(event.getBlock().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 0.5f, 0.5f);
                         }
                         age += 2;
@@ -68,8 +67,8 @@ public class WoodPileListener extends Module {
 
     @EventHandler
     public void blockBreakEvent(BlockBreakEvent event) {
-        for(WoodPile pile : woodPiles.keySet()) {
-            if(pile.contains(event.getBlock())) {
+        for (WoodPile pile : woodPiles.keySet()) {
+            if (pile.contains(event.getBlock())) {
                 woodPiles.get(pile).cancel();
                 woodPiles.remove(pile);
                 event.getBlock().setType(Material.FIRE);

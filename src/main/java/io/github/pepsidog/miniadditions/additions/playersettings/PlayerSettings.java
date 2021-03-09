@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.playersettings;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
-
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ public class PlayerSettings {
     private PlayerSettings() {
         config = MiniAdditions.getInstance().getConfigManager().getConfig("player-settings");
 
-        if(config == null) {
+        if (config == null) {
             this.enabled = false;
             return;
         }
@@ -35,13 +34,13 @@ public class PlayerSettings {
 
         Set<String> playerKeys = players.getKeys(false);
         playerValues = new HashMap<>();
-        for(String key : playerKeys) {
+        for (String key : playerKeys) {
             playerValues.put(UUID.fromString(key), config.getConfigurationSection("settings.players." + key));
         }
     }
 
     public static PlayerSettings getInstance() {
-        if(self == null) {
+        if (self == null) {
             self = new PlayerSettings();
         }
         return self;
@@ -50,8 +49,10 @@ public class PlayerSettings {
     public Object getSettingValue(String key, Player player) {
         UUID uuid = player.getUniqueId();
 
-        if(!this.enabled) { return null; }
-        if(!playerValues.containsKey(uuid)) {
+        if (!this.enabled) {
+            return null;
+        }
+        if (!playerValues.containsKey(uuid)) {
             playerValues.put(uuid, defaultValues);
         }
 
@@ -63,7 +64,7 @@ public class PlayerSettings {
     }
 
     public void saveSettings() {
-        for(UUID uuid : playerValues.keySet()) {
+        for (UUID uuid : playerValues.keySet()) {
             config.set("settings.players." + uuid, playerValues.get(uuid));
             MiniAdditions.getInstance().getConfigManager().saveConfig("player-settings");
         }

@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.utils;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,11 +22,11 @@ public class CustomProjectile extends BukkitRunnable {
     private double gravity;
     private double downForce;
     private Location location;
-    private Vector direction;
+    private final Vector direction;
     private DisplayParticle display;
     private EntityCollision entityCollision;
     private BlockCollision blockCollision;
-    private Map<String, Object> metaData;
+    private final Map<String, Object> metaData;
 
     public CustomProjectile(Location location, Vector direction, double radius, int lifespan) {
         this.location = location;
@@ -79,7 +78,7 @@ public class CustomProjectile extends BukkitRunnable {
 
     public void update() {
 
-        if(this.direction.clone().add(this.acceleration).length() <= this.maxSpeed) {
+        if (this.direction.clone().add(this.acceleration).length() <= this.maxSpeed) {
             this.direction.add(this.acceleration);
         }
         this.downForce -= this.gravity;
@@ -88,10 +87,10 @@ public class CustomProjectile extends BukkitRunnable {
         this.location.add(0, this.downForce, 0);
         Block block = this.location.getBlock();
         Collection<Entity> entities = this.location.getWorld().getNearbyEntities(this.location, this.radius, this.radius, this.radius);
-        if(entities.size() > 0) {
+        if (entities.size() > 0) {
             this.entityCollision.execute(this, entities);
         }
-        if(!block.getType().equals(Material.AIR)) {
+        if (!block.getType().equals(Material.AIR)) {
             this.blockCollision.execute(this, block);
         }
     }
@@ -101,7 +100,7 @@ public class CustomProjectile extends BukkitRunnable {
     }
 
     public void run() {
-        if(this.lifespan <= 0) {
+        if (this.lifespan <= 0) {
             this.destroy();
             return;
         }
@@ -151,7 +150,7 @@ public class CustomProjectile extends BukkitRunnable {
         void execute(CustomProjectile projectile, Collection<Entity> hit);
     }
 
-    public interface  BlockCollision {
+    public interface BlockCollision {
         void execute(CustomProjectile projectile, Block block);
     }
 

@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.nosheepgriefing;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;

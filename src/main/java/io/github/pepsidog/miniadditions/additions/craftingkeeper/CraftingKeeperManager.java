@@ -17,7 +17,7 @@ public class CraftingKeeperManager implements ConfigurationSerializable {
     }
 
     public static CraftingKeeperManager getInstance() {
-        if(self == null) {
+        if (self == null) {
             self = new CraftingKeeperManager();
         }
         return self;
@@ -48,12 +48,12 @@ public class CraftingKeeperManager implements ConfigurationSerializable {
         Map<String, Object> result = new HashMap<>();
         List<String> ids = new ArrayList<>();
 
-        for(Location location : this.inventories.keySet()) {
-            String randId = UUID.randomUUID().toString().replace("-","");
+        for (Location location : this.inventories.keySet()) {
+            String randId = UUID.randomUUID().toString().replace("-", "");
             Map<String, Object> craftingTable = new HashMap<>();
             List<Map<String, Object>> contents = new ArrayList<>();
 
-            for(ItemStack item : this.inventories.get(location)) {
+            for (ItemStack item : this.inventories.get(location)) {
                 contents.add(item.serialize());
             }
 
@@ -73,9 +73,9 @@ public class CraftingKeeperManager implements ConfigurationSerializable {
         Map<Location, ItemStack[]> savedTables = new HashMap<>();
         List<String> ids = (ArrayList<String>) args.get("ids");
 
-        for(String id : ids) {
-            Map<String, Object> craftingTable = (Map<String, Object>)args.get(id);
-            Location loc = Location.deserialize((Map<String, Object>)craftingTable.get("location"));
+        for (String id : ids) {
+            Map<String, Object> craftingTable = (Map<String, Object>) args.get(id);
+            Location loc = Location.deserialize((Map<String, Object>) craftingTable.get("location"));
             List<ItemStack> items = new ArrayList<>();
             List<Map<String, Object>> craftingContents = (List<Map<String, Object>>) craftingTable.get("contents");
 

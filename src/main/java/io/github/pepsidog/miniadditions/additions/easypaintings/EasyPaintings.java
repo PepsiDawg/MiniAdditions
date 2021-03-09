@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.easypaintings;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Art;
 import org.bukkit.entity.Painting;
 import org.bukkit.event.EventHandler;
@@ -15,15 +14,17 @@ public class EasyPaintings extends Module {
 
     @EventHandler
     public void onPaintingClick(PlayerInteractEntityEvent event) {
-        if(event.getRightClicked() instanceof  Painting && event.getPlayer().isSneaking()) {
-            if(event.getHand().equals(EquipmentSlot.OFF_HAND)) { return; }
+        if (event.getRightClicked() instanceof Painting && event.getPlayer().isSneaking()) {
+            if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+                return;
+            }
 
             Painting painting = (Painting) event.getRightClicked();
             boolean changed = false;
             int type = painting.getArt().ordinal();
 
-            while(!changed) {
-                type = type+1 > 25 ? 0 : type+1;
+            while (!changed) {
+                type = type + 1 > 25 ? 0 : type + 1;
                 changed = painting.setArt(Art.values()[type]);
             }
         }

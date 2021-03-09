@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.cobblegenerator;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 public class CobbleGeneratorManager {
     private static CobbleGeneratorManager self;
-    private Map<Material, Double> materials;
+    private final Map<Material, Double> materials;
 
     private CobbleGeneratorManager() {
         this.materials = new HashMap<>();
@@ -24,7 +23,9 @@ public class CobbleGeneratorManager {
     }
 
     Material generateBlock() {
-        if(this.materials.size() == 0) { return Material.COBBLESTONE; }
+        if (this.materials.size() == 0) {
+            return Material.COBBLESTONE;
+        }
 
         List<Double> weights = new ArrayList<>(materials.values());
         double total = weights.stream().mapToDouble(Double::doubleValue).sum();
@@ -32,8 +33,8 @@ public class CobbleGeneratorManager {
         double randValue = MiniAdditions.getRandom().nextDouble() * total;
         List<Material> mats = new ArrayList<>(this.materials.keySet());
 
-        for(int index = 0; index < mats.size(); index++) {
-            if(randValue < weights.get(index)) {
+        for (int index = 0; index < mats.size(); index++) {
+            if (randValue < weights.get(index)) {
                 return mats.get(index);
             }
             randValue -= weights.get(index);
@@ -43,7 +44,7 @@ public class CobbleGeneratorManager {
     }
 
     public static CobbleGeneratorManager getInstance() {
-        if(self == null) {
+        if (self == null) {
             self = new CobbleGeneratorManager();
         }
         return self;
@@ -52,8 +53,10 @@ public class CobbleGeneratorManager {
     public static void loadConfig(ConfigurationSection section) {
         CobbleGeneratorManager manager = getInstance();
 
-        if(section == null) { return; }
-        for(String key : section.getKeys(false)) {
+        if (section == null) {
+            return;
+        }
+        for (String key : section.getKeys(false)) {
             try {
                 Material mat = Material.valueOf(key.toUpperCase());
                 double weight = section.getDouble(key);

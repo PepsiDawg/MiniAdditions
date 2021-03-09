@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBuilder {
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
     private List<String> lore;
     private String name;
 
@@ -61,11 +61,11 @@ public class ItemBuilder {
     public ItemStack build() {
         ItemMeta meta = this.itemStack.getItemMeta();
 
-        if(!this.name.equals("")) {
+        if (!this.name.equals("")) {
             meta.setDisplayName(this.name);
         }
 
-        if(this.lore.size() > 0) {
+        if (this.lore.size() > 0) {
             meta.setLore(this.lore);
         }
 

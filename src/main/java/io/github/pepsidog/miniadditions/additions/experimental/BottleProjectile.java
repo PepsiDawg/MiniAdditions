@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.experimental;
 
 import io.github.pepsidog.miniadditions.utils.CustomProjectile;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -17,13 +16,13 @@ public class BottleProjectile {
                 .addAcceleration(0.2, 2.5)
                 .addGravity(0.1)
                 .onDisplay(proj -> {
-                    if(proj.hasMetadata("proj_as")) {
+                    if (proj.hasMetadata("proj_as")) {
                         ArmorStand armorStand = (ArmorStand) proj.getMetadata("proj_as");
                         armorStand.teleport(proj.getLocation().clone().subtract(0, 1.7, 0));
                     }
                 })
                 .onBlockCollision((proj, block) -> {
-                    if(proj.hasMetadata("proj_as")) {
+                    if (proj.hasMetadata("proj_as")) {
                         ArmorStand armorStand = (ArmorStand) proj.getMetadata("proj_as");
                         armorStand.remove();
                         proj.destroy();

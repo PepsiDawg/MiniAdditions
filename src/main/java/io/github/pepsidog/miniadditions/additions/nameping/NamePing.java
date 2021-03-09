@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.additions.nameping;
 
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,8 +15,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NamePing extends Module {
-    private Map<String, Date> cooldowns;
-    private Pattern pattern;
+    private final Map<String, Date> cooldowns;
+    private final Pattern pattern;
     private int cooldown;
 
     public NamePing() {
@@ -36,14 +35,16 @@ public class NamePing extends Module {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String msg = event.getMessage();
         Matcher matcher = pattern.matcher(msg);
-        while(matcher.find()) {
+        while (matcher.find()) {
             Player player = Bukkit.getPlayer(matcher.group(1));
 
-            if(player != null && player.isOnline()) {
-                if(cooldowns.containsKey(player.getName())) {
+            if (player != null && player.isOnline()) {
+                if (cooldowns.containsKey(player.getName())) {
                     Date expire = cooldowns.get(player.getName());
 
-                    if(new Date().before(expire)) { return; }
+                    if (new Date().before(expire)) {
+                        return;
+                    }
                 }
 
                 player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);

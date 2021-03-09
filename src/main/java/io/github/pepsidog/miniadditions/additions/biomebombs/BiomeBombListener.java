@@ -2,13 +2,11 @@ package io.github.pepsidog.miniadditions.additions.biomebombs;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
 import io.github.mrsperry.mcutils.LocationUtils;
-
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.CustomProjectile;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,11 +23,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BiomeBombListener extends Module {
-    private NamespacedKey biomeBombTypeKey;
-    private NamespacedKey biomeBombColorKey;
+    private final NamespacedKey biomeBombTypeKey;
+    private final NamespacedKey biomeBombColorKey;
     private final PersistentDataType<String, String> STRING = PersistentDataType.STRING;
     private final PersistentDataType<Integer, Integer> INT = PersistentDataType.INTEGER;
     private int blastRange;
@@ -49,13 +49,13 @@ public class BiomeBombListener extends Module {
 
     @EventHandler
     public void onBiomeBombUse(PlayerInteractEvent event) {
-        if(event.getHand() == EquipmentSlot.OFF_HAND) {
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
             return;
         }
 
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         Player player = event.getPlayer();
-        if(ItemMetaHandler.hasKey(item, biomeBombTypeKey, STRING)) {
+        if (ItemMetaHandler.hasKey(item, biomeBombTypeKey, STRING)) {
             CustomProjectile biomeBomb = getBiomeBomb(item, player.getEyeLocation(), player.getLocation().getDirection());
             item.setAmount(item.getAmount() - 1);
             biomeBomb.launch();
@@ -67,18 +67,18 @@ public class BiomeBombListener extends Module {
                 .addAcceleration(0.1, 1.3)
                 .addGravity(0.05)
                 .onDisplay(proj -> {
-                    if(proj.hasMetadata("biomebomb_as")) {
+                    if (proj.hasMetadata("biomebomb_as")) {
                         ArmorStand armorStand = (ArmorStand) proj.getMetadata("biomebomb_as");
                         armorStand.teleport(proj.getLocation().clone().subtract(0, 2, 0));
                     }
                 })
                 .onBlockCollision((proj, block) -> {
-                    if(proj.hasMetadata("biomebomb_as") && proj.hasMetadata("type")) {
+                    if (proj.hasMetadata("biomebomb_as") && proj.hasMetadata("type")) {
                         ArmorStand armorStand = (ArmorStand) proj.getMetadata("biomebomb_as");
                         String type = String.valueOf(proj.getMetadata("type")).toUpperCase();
                         Biome biome = Biome.valueOf(type);
 
-                        int color = (int)proj.getMetadata("color");
+                        int color = (int) proj.getMetadata("color");
                         World world = proj.getLocation().getWorld();
                         if (world == null) {
                             return;
@@ -88,9 +88,10 @@ public class BiomeBombListener extends Module {
                         new BukkitRunnable() {
                             int age = 0;
                             final int life = 20;
+
                             @Override
                             public void run() {
-                                if(age > life) {
+                                if (age > life) {
                                     this.cancel();
                                 }
                                 world.spawnParticle(Particle.REDSTONE, origin, 200, 2, 2, 2, 0, new Particle.DustOptions(Color.fromRGB(color), 1));
@@ -103,10 +104,10 @@ public class BiomeBombListener extends Module {
                         origin.add(0.5, 0, 0.5);
                         Location effectedLocation = origin.clone();
 
-                        for(int x = -this.blastRange - 1; x < this.blastRange + 1; x++) {
-                            for(int z = -this.blastRange - 1; z < this.blastRange + 1; z++) {
+                        for (int x = -this.blastRange - 1; x < this.blastRange + 1; x++) {
+                            for (int z = -this.blastRange - 1; z < this.blastRange + 1; z++) {
                                 LocationUtils.setXYZ(effectedLocation, origin.getX() + x, origin.getY(), origin.getZ() + z);
-                                if(origin.distance(effectedLocation) <= this.blastRange) {
+                                if (origin.distance(effectedLocation) <= this.blastRange) {
                                     world.getBlockAt(effectedLocation).setBiome(biome);
                                 }
                             }

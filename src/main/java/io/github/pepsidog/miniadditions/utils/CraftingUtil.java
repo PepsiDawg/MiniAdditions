@@ -1,7 +1,6 @@
 package io.github.pepsidog.miniadditions.utils;
 
 import io.github.pepsidog.miniadditions.MiniAdditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class CraftingUtil {
@@ -31,9 +31,7 @@ public class CraftingUtil {
     public static Material[] repeat(Material mat, int count) {
         Material[] result = new Material[count];
 
-        for (int i = 0; i < result.length; i++) {
-            result[i] = mat;
-        }
+        Arrays.fill(result, mat);
         return result;
     }
 }

@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WoodPile {
-    private List<Block> fuel;
-    private List<Block> covering;
+    private final List<Block> fuel;
+    private final List<Block> covering;
     private List<Block> visited;
     static List<Material> validCovering = Arrays.asList(Material.GRASS_BLOCK, Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.MYCELIUM);
     static List<Material> validFuel = Arrays.asList(Material.ACACIA_LOG, Material.BIRCH_LOG, Material.DARK_OAK_LOG, Material.JUNGLE_LOG, Material.OAK_LOG, Material.SPRUCE_LOG);
@@ -33,32 +33,44 @@ public class WoodPile {
     public boolean checkValid(Block start) {
         visited = new ArrayList<>();
 
-        if(isValidCovering(start)) { //find fuel;
-            if(isValidFuel(start.getRelative(BlockFace.UP))) { return recursiveCheck(start.getRelative(BlockFace.UP)); }
-            if(isValidFuel(start.getRelative(BlockFace.DOWN))) { return recursiveCheck(start.getRelative(BlockFace.DOWN)); }
-            if(isValidFuel(start.getRelative(BlockFace.EAST))) { return recursiveCheck(start.getRelative(BlockFace.EAST)); }
-            if(isValidFuel(start.getRelative(BlockFace.WEST))) { return recursiveCheck(start.getRelative(BlockFace.WEST)); }
-            if(isValidFuel(start.getRelative(BlockFace.NORTH))) { return recursiveCheck(start.getRelative(BlockFace.NORTH)); }
-            if(isValidFuel(start.getRelative(BlockFace.SOUTH))) { return recursiveCheck(start.getRelative(BlockFace.SOUTH)); }
+        if (isValidCovering(start)) { //find fuel;
+            if (isValidFuel(start.getRelative(BlockFace.UP))) {
+                return recursiveCheck(start.getRelative(BlockFace.UP));
+            }
+            if (isValidFuel(start.getRelative(BlockFace.DOWN))) {
+                return recursiveCheck(start.getRelative(BlockFace.DOWN));
+            }
+            if (isValidFuel(start.getRelative(BlockFace.EAST))) {
+                return recursiveCheck(start.getRelative(BlockFace.EAST));
+            }
+            if (isValidFuel(start.getRelative(BlockFace.WEST))) {
+                return recursiveCheck(start.getRelative(BlockFace.WEST));
+            }
+            if (isValidFuel(start.getRelative(BlockFace.NORTH))) {
+                return recursiveCheck(start.getRelative(BlockFace.NORTH));
+            }
+            if (isValidFuel(start.getRelative(BlockFace.SOUTH))) {
+                return recursiveCheck(start.getRelative(BlockFace.SOUTH));
+            }
         }
 
         return false;
     }
 
     private boolean recursiveCheck(Block current) {
-        if(this.visited.contains(current)) {
+        if (this.visited.contains(current)) {
             return true;
         }
 
-        if(!isValidCovering(current) && !isValidFuel(current)) {
-            return  false;
+        if (!isValidCovering(current) && !isValidFuel(current)) {
+            return false;
         }
 
         this.visited.add(current);
 
-        if(isValidFuel(current)) {
+        if (isValidFuel(current)) {
             this.fuel.add(current);
-            boolean  result =  recursiveCheck(current.getRelative(BlockFace.UP));
+            boolean result = recursiveCheck(current.getRelative(BlockFace.UP));
             result = result && recursiveCheck(current.getRelative(BlockFace.DOWN));
             result = result && recursiveCheck(current.getRelative(BlockFace.EAST));
             result = result && recursiveCheck(current.getRelative(BlockFace.WEST));
@@ -66,7 +78,7 @@ public class WoodPile {
             result = result && recursiveCheck(current.getRelative(BlockFace.NORTH));
 
             return result;
-        } else if(current.getRelative(BlockFace.UP).getType().equals(Material.AIR)) {
+        } else if (current.getRelative(BlockFace.UP).getType().equals(Material.AIR)) {
             this.covering.add(current);
         }
 
@@ -78,14 +90,14 @@ public class WoodPile {
     }
 
     public void convertFuel() {
-        for(Block block : this.fuel) {
+        for (Block block : this.fuel) {
             block.setType(Material.COAL_BLOCK);
         }
     }
 
     public void showBurning(Particle particle) {
-        for(Block block : this.covering) {
-            block.getWorld().spawnParticle(particle, block.getLocation().clone().add(0.5,1,0.5), 1, 0.5, 0, 0.5, 0);
+        for (Block block : this.covering) {
+            block.getWorld().spawnParticle(particle, block.getLocation().clone().add(0.5, 1, 0.5), 1, 0.5, 0, 0.5, 0);
         }
     }
 

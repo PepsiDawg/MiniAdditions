@@ -1,13 +1,11 @@
 package io.github.pepsidog.miniadditions.additions.improvedshears;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
-
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
 import io.github.pepsidog.miniadditions.utils.StringHelper;
-
 import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -22,7 +20,7 @@ import java.util.Map;
 
 public class ShearListener extends Module {
     private int chance;
-    private NamespacedKey shearKey;
+    private final NamespacedKey shearKey;
     private final PersistentDataType<Byte, Byte> BYTE = PersistentDataType.BYTE;
 
     public ShearListener() {
@@ -39,13 +37,13 @@ public class ShearListener extends Module {
 
     @EventHandler
     public void onShear(PlayerShearEntityEvent event) {
-        if(event.getEntity() instanceof Sheep) {
+        if (event.getEntity() instanceof Sheep) {
             Player player = event.getPlayer();
             Sheep sheep = (Sheep) event.getEntity();
             ItemStack itemUsed = checkAndGet(player);
 
-            if(itemUsed.getType().equals(Material.SHEARS) && ItemMetaHandler.hasKey(itemUsed, this.shearKey, BYTE)) {
-                if(MiniAdditions.getRandom().nextDouble() <= (chance / 100.0)) {
+            if (itemUsed.getType().equals(Material.SHEARS) && ItemMetaHandler.hasKey(itemUsed, this.shearKey, BYTE)) {
+                if (MiniAdditions.getRandom().nextDouble() <= (chance / 100.0)) {
                     event.setCancelled(true);
                     DyeColor color = sheep.getColor();
                     if (color != null) {
@@ -65,9 +63,9 @@ public class ShearListener extends Module {
         ItemStack main = player.getInventory().getItemInMainHand();
         ItemStack off = player.getInventory().getItemInOffHand();
 
-        if(main.getType().equals(Material.SHEARS)) {
+        if (main.getType().equals(Material.SHEARS)) {
             return main;
-        } else if(off.getType().equals(Material.SHEARS)) {
+        } else if (off.getType().equals(Material.SHEARS)) {
             return off;
         }
         return main;

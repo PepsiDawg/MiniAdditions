@@ -2,9 +2,7 @@ package io.github.pepsidog.miniadditions.additions.inventoryinspector;
 
 import io.github.mrsperry.mcutils.builders.ItemBuilder;
 import io.github.mrsperry.mcutils.builders.PotionBuilder;
-
 import io.github.pepsidog.miniadditions.utils.Module;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -13,7 +11,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
