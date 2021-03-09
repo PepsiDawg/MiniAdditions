@@ -18,7 +18,6 @@ import io.github.pepsidog.miniadditions.additions.inventoryinspector.InventoryIn
 import io.github.pepsidog.miniadditions.additions.leadattacher.LeadAttacherListener;
 import io.github.pepsidog.miniadditions.additions.nameping.NamePing;
 import io.github.pepsidog.miniadditions.additions.nosheepgriefing.NoSheepGriefingListener;
-import io.github.pepsidog.miniadditions.additions.playersettings.PlayerSettings;
 import io.github.pepsidog.miniadditions.additions.slimyboots.SlimyBootsListener;
 import io.github.pepsidog.miniadditions.additions.woodpile.WoodPileListener;
 import io.github.pepsidog.miniadditions.utils.Module;
@@ -78,7 +77,6 @@ public class MiniAdditions extends JavaPlugin {
     @Override
     public void onDisable() {
         saveCrafting();
-        PlayerSettings.getInstance().saveSettings();
     }
 
     public static MiniAdditions getInstance() {
