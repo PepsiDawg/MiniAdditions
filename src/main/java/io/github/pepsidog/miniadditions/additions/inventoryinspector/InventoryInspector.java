@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -105,21 +106,27 @@ public class InventoryInspector extends Module implements Listener {
 
     @EventHandler
     private void onInventoryClick(final InventoryClickEvent event) {
-        if (this.inventories.contains(event.getInventory())) {
+        final boolean regular = this.inventories.contains(event.getWhoClicked().getOpenInventory().getTopInventory());
+        final boolean clicked = this.inventories.contains(event.getClickedInventory());
+
+        final InventoryAction action = event.getAction();
+        if (clicked && action != InventoryAction.CLONE_STACK) {
             event.setCancelled(true);
+        }
+
+        if (regular) {
+            switch (action) {
+                case COLLECT_TO_CURSOR:
+                case MOVE_TO_OTHER_INVENTORY:
+                    event.setCancelled(true);
+                    break;
+            }
         }
     }
 
     @EventHandler
     private void onInventoryMoveItem(final InventoryMoveItemEvent event) {
-        if (this.inventories.contains(event.getSource())) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    private void onInventoryPickupItem(final InventoryPickupItemEvent event) {
-        if (this.inventories.contains(event.getInventory())) {
+        if (this.inventories.contains(event.getDestination())) {
             event.setCancelled(true);
         }
     }
