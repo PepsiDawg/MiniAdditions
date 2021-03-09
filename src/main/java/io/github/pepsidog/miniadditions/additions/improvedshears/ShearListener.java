@@ -1,9 +1,9 @@
 package io.github.pepsidog.miniadditions.additions.improvedshears;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
+import io.github.mrsperry.mcutils.builders.ItemBuilder;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
-import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
 import io.github.pepsidog.miniadditions.utils.StringHelper;
 import org.bukkit.*;

@@ -2,10 +2,10 @@ package io.github.pepsidog.miniadditions.additions.biomebombs;
 
 import io.github.mrsperry.mcutils.ItemMetaHandler;
 import io.github.mrsperry.mcutils.LocationUtils;
+import io.github.mrsperry.mcutils.builders.ItemBuilder;
 import io.github.pepsidog.miniadditions.MiniAdditions;
 import io.github.pepsidog.miniadditions.utils.CraftingUtil;
 import io.github.pepsidog.miniadditions.utils.CustomProjectile;
-import io.github.pepsidog.miniadditions.utils.ItemBuilder;
 import io.github.pepsidog.miniadditions.utils.Module;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -138,9 +138,10 @@ public class BiomeBombListener extends Module {
 
     private void addRecipe(Map<Material, Integer> ingredients, String type, ChatColor textColor, Color fireworkColor) {
         String displayName = type.replace('_', ' ');
-        ItemBuilder builder = new ItemBuilder(Material.FIREWORK_STAR)
-                .setName(textColor + displayName + " " + ChatColor.GRAY + "Biome Bomb");
-        ItemStack item = builder.setLore(Collections.singletonList(ChatColor.GRAY + "Type: " + ChatColor.GOLD + displayName)).build();
+        ItemStack item = new ItemBuilder(Material.FIREWORK_STAR)
+                .setName(textColor + displayName + " " + ChatColor.GRAY + "Biome Bomb")
+                .setLore(Collections.singletonList(ChatColor.GRAY + "Type: " + ChatColor.GOLD + displayName))
+                .build();
 
         ItemMetaHandler.set(item, biomeBombTypeKey, STRING, type.toUpperCase());
         ItemMetaHandler.set(item, biomeBombColorKey, INT, fireworkColor.asRGB());
